@@ -12,7 +12,9 @@ import com.mongodb.ServerAddress;
 import com.mongodb.client.MongoDatabase;
 import java.util.List;
 import javax.swing.text.Document;
+import org.bson.UuidRepresentation;
 import org.bson.codecs.Codec;
+import org.bson.codecs.UuidCodec;
 import org.bson.codecs.configuration.CodecRegistries;
 import org.bson.codecs.configuration.CodecRegistry;
 import org.junit.Test;
@@ -33,6 +35,10 @@ public class TesteConexaoMongo {
     private String password = "root";
     private String dataBase = "proo";              
     
+    CodecRegistry codecRegistry =
+        CodecRegistries.fromRegistries(CodecRegistries.fromCodecs(new UuidCodec(UuidRepresentation.STANDARD)),
+                                       MongoClient.getDefaultCodecRegistry());
+    
     public static synchronized MongoConnection getInstance() {
         if (uniqInstance == null) {
             uniqInstance = new MongoConnection();
@@ -44,7 +50,7 @@ public class TesteConexaoMongo {
         if (mongo == null) {
             MongoClientURI uri = new MongoClientURI("mongodb://"+user+":"+password+host+"/"+dataBase);
             mongo = new MongoClient(uri);
-            db = mongo.getDatabase("proo");
+            db = mongo.getDatabase("proo").withCodecRegistry(codecRegistry);
             System.out.println("Mongo instance equals :> " + mongoInstance++);
         }        
     }
