@@ -11,6 +11,7 @@ import com.mongodb.MongoClientURI;
 import util.MongoConnection;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
+import static com.mongodb.client.model.Filters.eq;
 import java.util.ArrayList;
 import static java.util.Arrays.asList;
 import java.util.List;
@@ -44,7 +45,7 @@ public class TesteQueries {
         Endereco en = new Endereco("Maceio","Tabuleirio","57084040","A 40","007","");
         Usuario us = new Usuario("Tiago de Lima Alves","123455","hotmail.com","uuuu9999","88888888",en);
             
-        collection.insertOne(us);
+        collection.insertOne(us);        
                
     }
     
@@ -60,14 +61,9 @@ public class TesteQueries {
     
     @Test
     public void deveImprimirNoConsoleTodosOsUsuariosDaCollection() {
-        Block<Usuario> printBlock = new Block<Usuario>() {
-        @Override
-            public void apply(Usuario person) {
-                System.out.println(person.toString());
-            }
-        };
-
-        collection.find().forEach(printBlock);
+        for (Usuario cur : collection.find()) {
+            System.out.println(cur.getNomeCompleto()+cur.getEmail()+cur.getFone1());
+        }
     }
     
 }
