@@ -5,11 +5,15 @@
  */
 package testeCollections;
 
+import com.mongodb.Block;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
 import util.MongoConnection;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
+import java.util.ArrayList;
+import static java.util.Arrays.asList;
+import java.util.List;
 import static org.bson.codecs.configuration.CodecRegistries.fromProviders;
 import static org.bson.codecs.configuration.CodecRegistries.fromRegistries;
 import org.bson.codecs.configuration.CodecRegistry;
@@ -36,12 +40,34 @@ public class TesteQueries {
                     .withCodecRegistry(pojoCodecRegistry);
     
     @Test
-    public void deveSalvarUsuarioNoBanco() {
+    public void deveInserirUsuarioNoBanco() {
         Endereco en = new Endereco("Maceio","Tabuleirio","57084040","A 40","007","");
         Usuario us = new Usuario("Tiago de Lima Alves","123455","hotmail.com","uuuu9999","88888888",en);
             
         collection.insertOne(us);
                
+    }
+    
+    @Test
+    public void deveInserirVariosUsuariosnoBanco(){
+        List<Usuario> usuario = new ArrayList<Usuario>();
+        for(int i=0; i<10; i++){
+            usuario.add(new Usuario("Tiago de Lima Alves","123455","hotmail.com","uuuu9999","88888888",new Endereco("Maceio","Tabuleirio","57084040","A 40","007","")));
+        }
+        
+        collection.insertMany(usuario);
+    }
+    
+    @Test
+    public void deveImprimirNoConsoleTodosOsUsuariosDaCollection() {
+        Block<Usuario> printBlock = new Block<Usuario>() {
+        @Override
+            public void apply(Usuario person) {
+                System.out.println(person.toString());
+            }
+        };
+
+        collection.find().forEach(printBlock);
     }
     
 }
