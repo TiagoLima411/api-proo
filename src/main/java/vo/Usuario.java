@@ -29,12 +29,14 @@ public class Usuario {
         String senha,
         String email,
         String fone1,
-        String fone2){
+        String fone2,
+        Endereco endereco){
         this.nomeCompleto = nomeCompleto;
         this.email = email;
         this.senha = senha;
         this.fone1 = fone1;
         this.fone2 = fone2;
+        this.endereco = endereco;
     }
 
     public ObjectId getId() {
@@ -84,5 +86,15 @@ public class Usuario {
     public void setFone2(String fone2) {
         this.fone2 = fone2;
     }
+
+    public Endereco getEndereco() {
+        return endereco;
+    }
+
+    public void setEndereco(Endereco endereco) {
+        this.endereco = endereco;
+    }
+    
+    
         
 }

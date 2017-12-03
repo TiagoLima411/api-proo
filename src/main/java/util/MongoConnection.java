@@ -5,12 +5,13 @@
  */
 package util;
 
-import com.mongodb.DB;
-import com.mongodb.Mongo;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
-import com.mongodb.MongoURI;
 import com.mongodb.client.MongoDatabase;
+import static org.bson.codecs.configuration.CodecRegistries.fromProviders;
+import static org.bson.codecs.configuration.CodecRegistries.fromRegistries;
+import org.bson.codecs.configuration.CodecRegistry;
+import org.bson.codecs.pojo.PojoCodecProvider;
 
 /**
  *
@@ -29,7 +30,7 @@ public class MongoConnection {
     
     public MongoConnection() {
         
-    }
+    }        
     
     //garante sempre uma unica instancia
     public static synchronized MongoConnection getInstance() {
