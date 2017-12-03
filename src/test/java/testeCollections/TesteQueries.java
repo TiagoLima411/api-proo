@@ -19,6 +19,8 @@ import static org.bson.codecs.configuration.CodecRegistries.fromProviders;
 import static org.bson.codecs.configuration.CodecRegistries.fromRegistries;
 import org.bson.codecs.configuration.CodecRegistry;
 import org.bson.codecs.pojo.PojoCodecProvider;
+import org.bson.conversions.Bson;
+import org.bson.types.ObjectId;
 import org.junit.Test;
 import vo.Endereco;
 import vo.Usuario;
@@ -45,8 +47,8 @@ public class TesteQueries {
         Endereco en = new Endereco("Maceio","Tabuleirio","57084040","A 40","007","");
         Usuario us = new Usuario("Tiago de Lima Alves","123455","hotmail.com","uuuu9999","88888888",en);
             
-        collection.insertOne(us);        
-               
+        collection.insertOne(us);
+        
     }
     
     @Test
@@ -61,9 +63,19 @@ public class TesteQueries {
     
     @Test
     public void deveImprimirNoConsoleTodosOsUsuariosDaCollection() {
-        for (Usuario cur : collection.find()) {
-            System.out.println(cur.getNomeCompleto()+cur.getEmail()+cur.getFone1());
+        for (Usuario usuario : collection.find()) {
+            System.out.println(
+                    usuario.getNomeCompleto()+
+                    usuario.getEmail()+
+                    usuario.getFone1()
+            );
         }
+    }
+    
+    @Test
+    public void deveImprimirNoConsoleUmUsuarioConsultadoporId(){
+        Usuario usuario = collection.find(eq("_id", new ObjectId("5a240dbe6394faaaa386d3cf"))).first();
+        System.out.println(usuario.getNomeCompleto());
     }
     
 }
