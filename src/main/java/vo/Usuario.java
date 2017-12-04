@@ -27,7 +27,7 @@ public class Usuario {
     public Usuario(        
         String nomeCompleto,
         String senha,
-        String email,
+        String email,   
         String fone1,
         String fone2,
         Endereco endereco){

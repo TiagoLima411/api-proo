@@ -6,14 +6,9 @@
 package testeConexao;
 
 import com.mongodb.MongoClient;
-import com.mongodb.MongoClientOptions;
 import com.mongodb.MongoClientURI;
-import com.mongodb.ServerAddress;
 import com.mongodb.client.MongoDatabase;
-import java.util.List;
-import javax.swing.text.Document;
 import org.bson.UuidRepresentation;
-import org.bson.codecs.Codec;
 import org.bson.codecs.UuidCodec;
 import org.bson.codecs.configuration.CodecRegistries;
 import org.bson.codecs.configuration.CodecRegistry;
