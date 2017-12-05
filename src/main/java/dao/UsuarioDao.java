@@ -5,16 +5,10 @@
  */
 package dao;
 
-import com.mongodb.DBCursor;
 import util.MongoConnection;
 import com.mongodb.MongoClient;
-import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
-import static com.mongodb.client.model.Filters.eq;
-import static com.mongodb.client.model.Updates.combine;
 import static com.mongodb.client.model.Updates.set;
-import com.mongodb.client.result.DeleteResult;
-import com.mongodb.client.result.UpdateResult;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,12 +23,9 @@ DBCollection. Estes metodos recebem como parametros os objetos
 DBObject ou BasicDBObject.
 */
 
-import static org.bson.codecs.configuration.CodecRegistries.fromProviders;
-import static org.bson.codecs.configuration.CodecRegistries.fromRegistries;
 import org.bson.codecs.configuration.CodecRegistry;
 import org.bson.codecs.pojo.PojoCodecProvider;
 import org.bson.types.ObjectId;
-import vo.Endereco;
 import vo.Usuario;
 import static com.mongodb.client.model.Filters.eq;
 import static com.mongodb.client.model.Updates.combine;
@@ -45,7 +36,7 @@ import static org.bson.codecs.configuration.CodecRegistries.fromRegistries;
  *
  * @author tiago
  */
-public class UsuarioDao{                
+public class UsuarioDao implements IDao{                
     
     CodecRegistry pojoCodecRegistry = fromRegistries(MongoClient.getDefaultCodecRegistry(),
                 fromProviders(PojoCodecProvider.builder().automatic(true).build()));
@@ -66,11 +57,11 @@ public class UsuarioDao{
         
     }    
     
-    public void salvarListaDeUsuarios(List usuario){                        
+    public void salvarLista(List usuario){                        
         collection.insertMany(usuario);        
     }    
     
-    public List listarUsuarios() {
+    public List listar() {
         List<Usuario> listaUsuarios = new ArrayList<Usuario>();        
         
         for (Usuario usuario : collection.find()) {
@@ -80,7 +71,7 @@ public class UsuarioDao{
         return listaUsuarios;
     }    
     
-    public Usuario listarUsuarioPorId(String id){                                                       
+    public Usuario listarPorId(String id){                                                       
         
         Usuario usuario = collection.find(eq("_id",new ObjectId(id))).first();            
                             
@@ -88,13 +79,13 @@ public class UsuarioDao{
     }
     
     //Fazer sobrecarga de metodos
-    public void atualizarUsuarioPorId(String id, String email, String nomeCompleto){        
+    public void atualizarPorId(String id, String email, String nomeCompleto){        
         collection.updateOne(eq("_id",new ObjectId(id)), 
                 combine(set("email", email), 
                         set("nomeCompleto", nomeCompleto)));                
     }
     
-    public void atualizarUsuarioPorId(String id, Usuario usuario){
+    public void atualizarPorId(String id, Usuario usuario){
         try{            
             collection.replaceOne(eq("_id", new ObjectId(id)), usuario);
         }catch(Exception ex){
@@ -102,7 +93,7 @@ public class UsuarioDao{
         }
     }
         
-    public void removerUsuarioPorId(String id){
+    public void removerPorId(String id){
         try{
             collection.deleteOne(eq("_id", new ObjectId(id)));
         }catch(Exception ex){
@@ -110,7 +101,7 @@ public class UsuarioDao{
         }
     }
         
-    public void removerUsuarioPorAtributo(String atributo, String valor){        
+    public void removerPorAtributo(String atributo, String valor){        
         try{
            collection.deleteMany(eq(atributo, valor));
         }catch(Exception ex){

@@ -6,6 +6,7 @@
 package testesMetodosDao;
 
 import static com.mongodb.client.model.Filters.eq;
+import dao.IDao;
 import dao.UsuarioDao;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +18,7 @@ import vo.Usuario;
  *
  * @author tiago
  */
-public class TesteUsuarioDao {
+public class TesteUsuarioDao{
     
     @Test
     public void deveInserirUsuarioNoBanco(){
@@ -39,7 +40,7 @@ public class TesteUsuarioDao {
         
         UsuarioDao usuarioDao = new UsuarioDao();
         usuarioDao.salvar(usuario);
-        usuarioDao.removerUsuarioPorAtributo("nomeCompleto", "Tiago de Lima Alves");
+        usuarioDao.removerPorAtributo("nomeCompleto", "Tiago de Lima Alves");
     }
     
     @Test
@@ -49,8 +50,8 @@ public class TesteUsuarioDao {
             usuario.add(new Usuario("Tiago de Lima Alves","123455","hotmail.com","uuuu9999","88888888",new Endereco("Maceio","Tabuleirio","57084040","A 40","007","")));
         }
         UsuarioDao usuarioDao = new UsuarioDao();
-        usuarioDao.salvarListaDeUsuarios(usuario);
-        usuarioDao.removerUsuarioPorAtributo("nomeCompleto", "Tiago de Lima Alves");
+        usuarioDao.salvarLista(usuario);
+        usuarioDao.removerPorAtributo("nomeCompleto", "Tiago de Lima Alves");
     }
          
     @Test
@@ -61,7 +62,7 @@ public class TesteUsuarioDao {
         }
         UsuarioDao usuarioDao = new UsuarioDao();
         List<Usuario> listUsuario = new ArrayList<Usuario>();
-        listUsuario = usuarioDao.listarUsuarios();
+        listUsuario = usuarioDao.listar();
         
         for (Usuario usuario : listUsuario) {
             System.out.println("Buca todos:>"+
@@ -70,7 +71,7 @@ public class TesteUsuarioDao {
                     usuario.getFone1()
             );
         }
-        usuarioDao.removerUsuarioPorAtributo("nomeCompleto", "Tiago de Lima Alves");
+        usuarioDao.removerPorAtributo("nomeCompleto", "Tiago de Lima Alves");
     }
 
     @Test
@@ -78,7 +79,7 @@ public class TesteUsuarioDao {
         try{
             UsuarioDao usuarioDao = new UsuarioDao();
             Usuario usuario = new Usuario();
-            usuario = usuarioDao.listarUsuarioPorId("5a255b126394faaaa39009a4");
+            usuario = usuarioDao.listarPorId("5a255b126394faaaa39009a4");
         }catch(Exception ex){
             System.out.println("Não foi possível localizar Usuario"+ex.getMessage());
         }
@@ -88,7 +89,7 @@ public class TesteUsuarioDao {
     public void deveAtualizarUmUsuarioPassandoIdNomeEmailComoParametro(){
         try{
             UsuarioDao usuarioDao = new UsuarioDao();
-            usuarioDao.atualizarUsuarioPorId("5a255b126394faaaa39009a4", "emailteste@hotail", "TEste de atualização");
+            usuarioDao.atualizarPorId("5a255b126394faaaa39009a4", "emailteste@hotail", "TEste de atualização");
         }catch(Exception ex){
             System.out.println("Não foi possível atualizar usuario"+ex.getMessage());
         }        
@@ -99,7 +100,7 @@ public class TesteUsuarioDao {
         try{
             Usuario usuario = new Usuario("Tiago de Lima Alves","123455","hotmail.com","uuuu9999","88888888",new Endereco("Maceio","Tabuleirio","57084040","A 40","007",""));
             UsuarioDao usuarioDao = new UsuarioDao();
-            usuarioDao.atualizarUsuarioPorId("5a255b126394faaaa39009a4",usuario);
+            usuarioDao.atualizarPorId("5a255b126394faaaa39009a4",usuario);
         }catch(Exception ex){
             System.out.println("Não foi possível atualizar usuario"+ex.getMessage());
         }        
@@ -109,7 +110,7 @@ public class TesteUsuarioDao {
     public void deveRemoverUmUsuarioPassandoIdComoParametro(){
         try{
             UsuarioDao usuarioDao = new UsuarioDao();
-            usuarioDao.removerUsuarioPorId("5a255b126394faaaa39009a4");
+            usuarioDao.removerPorId("5a255b126394faaaa39009a4");
         }catch(Exception ex){
             System.out.println("Não foi possível remover usuario"+ex.getMessage());
         }                
@@ -119,7 +120,7 @@ public class TesteUsuarioDao {
     public void deveRemoverVariosUsuariosQueTenhamAChaveEOValorPassandoComoParametro(){
         try{
             UsuarioDao usuarioDao = new UsuarioDao();
-            usuarioDao.removerUsuarioPorAtributo("nomeCompleto", "Tiago de Lima Alves");
+            usuarioDao.removerPorAtributo("nomeCompleto", "Tiago de Lima Alves");
         }catch(Exception ex){
             System.out.println("Não foi possível remover usuario"+ex.getMessage());
         }
