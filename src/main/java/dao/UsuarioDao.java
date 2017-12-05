@@ -55,9 +55,9 @@ public class UsuarioDao{
                     .withCodecRegistry(pojoCodecRegistry);
         
     
-    /*protected MongoCollection getDbCollection() {
+    protected MongoCollection getDbCollection() {
         return collection;
-    }*/
+    }
             
     public void salvar(Usuario usuario) {        
             

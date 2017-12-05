@@ -55,10 +55,10 @@ public class TesteUsuarioDao {
          
     @Test
     public void deveListarTodosOsUsuarios(){
-        //List<Usuario> usuario = new ArrayList<Usuario>();
-        /*for(int i=0; i<100; i++){
-            usuario.add(new Usuario("Tiago de Lima Alves","123455","hotmail.com","uuuu9999","88888888",new Endereco("Maceio","Tabuleirio","57084040","A 40","007","")));
-        }*/
+        List<Usuario> usuarioInserir = new ArrayList<Usuario>();
+        for(int i=0; i<100; i++){
+            usuarioInserir.add(new Usuario("Tiago de Lima Alves","123455","hotmail.com","uuuu9999","88888888",new Endereco("Maceio","Tabuleirio","57084040","A 40","007","")));
+        }
         UsuarioDao usuarioDao = new UsuarioDao();
         List<Usuario> listUsuario = new ArrayList<Usuario>();
         listUsuario = usuarioDao.listarUsuarios();
@@ -70,7 +70,7 @@ public class TesteUsuarioDao {
                     usuario.getFone1()
             );
         }
-        
+        usuarioDao.removerUsuarioPorAtributo("nomeCompleto", "Tiago de Lima Alves");
     }
 
     @Test
