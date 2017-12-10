@@ -10,9 +10,12 @@ package servlets;
  * @author tiago
  */
 
+import static com.mongodb.client.model.Filters.eq;
+import dao.UsuarioDao;
 import java.io.IOException;
 import java.util.Base64;
 import java.util.StringTokenizer;
+import vo.Usuario;
 
 public class AuthenticationService {
 
@@ -37,11 +40,15 @@ public class AuthenticationService {
                 usernameAndPassword, ":");
         final String username = tokenizer.nextToken();
         final String password = tokenizer.nextToken();
-
+        
+        UsuarioDao usuarioDao = new UsuarioDao();
+        Usuario usuario = usuarioDao.listarPorNomeEmail(username, password);
+                
         // we have fixed the userid and password as admin
         // call some UserService/LDAP here
-        boolean authenticationStatus = "admin".equals(username)
-                && "admin".equals(password);
+        
+        boolean authenticationStatus = usuario.getNomeCompleto().equals(username)
+                && usuario.getSenha().equals(password);
         return authenticationStatus;
     }
 }

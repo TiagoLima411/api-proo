@@ -40,7 +40,7 @@ public class TesteUsuarioDao{
         
         UsuarioDao usuarioDao = new UsuarioDao();
         usuarioDao.salvar(usuario);
-        usuarioDao.removerPorAtributo("nomeCompleto", "Tiago de Lima Alves");
+        //usuarioDao.removerPorAtributo("nomeCompleto", "Tiago de Lima Alves");
     }
     
     @Test

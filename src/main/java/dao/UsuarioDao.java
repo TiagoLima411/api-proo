@@ -8,6 +8,8 @@ package dao;
 import util.MongoConnection;
 import com.mongodb.MongoClient;
 import com.mongodb.client.MongoCollection;
+import static com.mongodb.client.model.Filters.and;
+import static com.mongodb.client.model.Filters.eq;
 import static com.mongodb.client.model.Updates.set;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +29,6 @@ import org.bson.codecs.configuration.CodecRegistry;
 import org.bson.codecs.pojo.PojoCodecProvider;
 import org.bson.types.ObjectId;
 import vo.Usuario;
-import static com.mongodb.client.model.Filters.eq;
 import static com.mongodb.client.model.Updates.combine;
 import static org.bson.codecs.configuration.CodecRegistries.fromProviders;
 import static org.bson.codecs.configuration.CodecRegistries.fromRegistries;
@@ -75,6 +76,12 @@ public class UsuarioDao implements IDao{
         
         Usuario usuario = collection.find(eq("_id",new ObjectId(id))).first();            
                             
+        return usuario;
+    }
+    
+    public Usuario listarPorNomeEmail(String nome, String senha){
+        Usuario usuario = collection.find(and (eq("nomeCompleto", nome),eq("senha", senha))).first();
+        //Usuario usuario = collection.find(eq(nome, senha)).first();
         return usuario;
     }
     

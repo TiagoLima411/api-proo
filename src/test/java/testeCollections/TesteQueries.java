@@ -9,7 +9,9 @@ import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
+import static com.mongodb.client.model.Filters.and;
 import static com.mongodb.client.model.Filters.eq;
+import static com.mongodb.client.model.Filters.lt;
 import static com.mongodb.client.model.Updates.combine;
 import static com.mongodb.client.model.Updates.set;
 import com.mongodb.client.result.DeleteResult;
@@ -92,10 +94,10 @@ public class TesteQueries {
         try{
             
             Endereco en = new Endereco("Maceio","Tabuleirio","57084040","A 40","007","");
-            Usuario us = new Usuario("Tiago de Lima Alves","123455","hotmail.com","uuuu9999","88888888",en);            
+            Usuario us = new Usuario("Tiago de Lima Alves","123456","hotmail.com","uuuu9999","88888888",en);            
             collection.insertOne(us);
                         
-            Usuario usuarioBuscar = collection.find(eq("nomeCompleto", "Tiago de Lima Alves")).first();
+            Usuario usuarioBuscar = collection.find(and (eq("nomeCompleto", "Tiago de Lima Alves"),eq("senha", "123456"))).first();
             System.out.println("Usuario:> "+usuarioBuscar.getNomeCompleto()+" "+usuarioBuscar.getEmail());
             
             collection.deleteOne(eq("nomeCompleto", "Tiago de Lima Alves"));

@@ -7,6 +7,7 @@ package servlets;
 
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
@@ -44,6 +45,9 @@ public class RestAuthenticationFilter implements javax.servlet.Filter {
                 HttpServletResponse httpServletResponse = (HttpServletResponse) response;
                 httpServletResponse
                         .setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                
+                PrintWriter out = response.getWriter();
+                out.println("SC_UNAUTHORIZED");
             }
         }
     }
