@@ -42,7 +42,7 @@ public class AuthenticationService {
         final String password = tokenizer.nextToken();
         
         UsuarioDao usuarioDao = new UsuarioDao();
-        Usuario usuario = usuarioDao.listarPorCpfEmail(cpf, password);
+        Usuario usuario = usuarioDao.authenticationPorCpfEmail(cpf, password);
                 
         // we have fixed the userid and password as admin
         // call some UserService/LDAP here

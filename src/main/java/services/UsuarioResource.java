@@ -33,21 +33,13 @@ public class UsuarioResource {
     }
     
     @GET
-    @Path("/usuario/{id}")
+    @Path("/usuario/{cpf}")
     @Produces("application/json")
-    public String listarUsuarioPorId(@PathParam ("id") String id) {        
+    public String listarUsuarioPorId(@PathParam ("cpf") String id) {        
         UsuarioDao usuarioDao = new UsuarioDao();
-        Usuario usuario = usuarioDao.listarPorId(id);        
+        Usuario usuario = usuarioDao.listarPorCpf(id);        
         Gson g = new Gson();
-        return g.toJson(usuario.toString());
+        return g.toJson(usuario);
     }
-    /*
-    @GET
-    @Produces(MediaType.TEXT_HTML)
-    public String sayHtmlHello() {
-        return "<html> " + "<title>" + "Hello World RESTful Jersey"
-                + "</title>" + "<body><h1>" + "Hello World RESTful Jersey"
-                + "</body></h1>" + "</html> ";
-    }
-*/
+    
 }

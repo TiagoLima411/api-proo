@@ -28,7 +28,7 @@ import org.bson.json.JsonWriterSettings;
  *
  * @author tiago
  */
-public class UsuarioDao implements IDao{                
+public class UsuarioDao{                
     
     CodecRegistry pojoCodecRegistry = fromRegistries(MongoClient.getDefaultCodecRegistry(),
                 fromProviders(PojoCodecProvider.builder().automatic(true).build()));
@@ -62,14 +62,23 @@ public class UsuarioDao implements IDao{
         return listaUsuarios;
     }    
     
-    public Usuario listarPorId(String id){                                                       
+    public Usuario listarPorCpf(String cpf){                                                       
+        Usuario usuario = null;
+        usuario = collection.find(eq("cpf", cpf)).first();            
         
-        Usuario usuario = collection.find(eq("_id",new ObjectId(id))).first();            
-                            
-        return usuario;
+        Usuario usuarioRet = new Usuario();
+                                    
+        usuarioRet.setNomeCompleto(usuario.getNomeCompleto());
+        usuarioRet.setEmail(usuario.getEmail());
+        usuarioRet.setFone1(usuario.getFone1());
+        usuarioRet.setFone2(usuario.getFone2());
+        usuarioRet.setEndereco(usuario.getEndereco());
+        usuarioRet.setCpf(usuario.getCpf());
+        
+        return usuarioRet;
     }
-    
-    public Usuario listarPorCpfEmail(String cpf, String senha){
+        
+    public Usuario authenticationPorCpfEmail(String cpf, String senha){
         Usuario usuario = collection.find(and (eq("cpf", cpf),eq("senha", senha))).first();        
         return usuario;
     }
