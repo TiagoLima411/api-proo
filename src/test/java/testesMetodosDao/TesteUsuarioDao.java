@@ -18,7 +18,7 @@ import vo.Usuario;
  *
  * @author tiago
  */
-public class TesteUsuarioDao{
+public class TesteUsuarioDao{/*
     
     @Test
     public void deveInserirUsuarioNoBanco(){
@@ -40,7 +40,7 @@ public class TesteUsuarioDao{
         
         UsuarioDao usuarioDao = new UsuarioDao();
         usuarioDao.salvar(usuario);
-        //usuarioDao.removerPorAtributo("nomeCompleto", "Tiago de Lima Alves");
+        usuarioDao.removerPorAtributo("nomeCompleto", "Tiago de Lima Alves");
     }
     
     @Test
@@ -57,7 +57,7 @@ public class TesteUsuarioDao{
     @Test
     public void deveListarTodosOsUsuarios(){
         List<Usuario> usuarioInserir = new ArrayList<Usuario>();
-        for(int i=0; i<100; i++){
+        /*for(int i=0; i<100; i++){
             usuarioInserir.add(new Usuario("Tiago de Lima Alves","123455","hotmail.com","uuuu9999","88888888",new Endereco("Maceio","Tabuleirio","57084040","A 40","007","")));
         }
         UsuarioDao usuarioDao = new UsuarioDao();
@@ -65,15 +65,13 @@ public class TesteUsuarioDao{
         listUsuario = usuarioDao.listar();
         
         for (Usuario usuario : listUsuario) {
-            System.out.println("Buca todos:>"+
-                    usuario.getNomeCompleto()+
-                    usuario.getEmail()+
-                    usuario.getFone1()
+            System.out.println("Buca todos:> "+ usuario
+                    
             );
         }
         usuarioDao.removerPorAtributo("nomeCompleto", "Tiago de Lima Alves");
     }
-
+    
     @Test
     public void deveEncontrarUmUsuarioPassandoIdComoParametro(){
         try{
@@ -124,5 +122,5 @@ public class TesteUsuarioDao{
         }catch(Exception ex){
             System.out.println("Não foi possível remover usuario"+ex.getMessage());
         }
-    }
+    }*/
 }

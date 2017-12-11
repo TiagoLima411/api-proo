@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package servlets;
+package services;
 
 
 import java.io.IOException;
@@ -41,6 +41,7 @@ public class RestAuthenticationFilter implements javax.servlet.Filter {
 
             if (authenticationStatus) {
                 filter.doFilter(request, response);
+                response.setContentType("application/json");
             } else if (response instanceof HttpServletResponse) {
                 HttpServletResponse httpServletResponse = (HttpServletResponse) response;
                 httpServletResponse

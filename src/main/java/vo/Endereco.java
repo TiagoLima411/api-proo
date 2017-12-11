@@ -84,7 +84,17 @@ public class Endereco {
     public void setInfoAdcional(String infoAdcional) {
         this.infoAdcional = infoAdcional;
     }
-    
-    
+       
+    @Override
+    public String toString() {
+        return "Usuario{" +                
+                ", cidade:'" + cidade + '\'' +
+                ", bairro:'" + bairro + '\'' +
+                ", cep:" + cep + '\'' +
+                ", rua:" + rua + '\'' +
+                ", numero:" + numero + '\''+
+                ", infoAdcional:" + infoAdcional +
+                '}';
+    }
     
 }

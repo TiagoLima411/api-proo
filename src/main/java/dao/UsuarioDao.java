@@ -14,17 +14,6 @@ import static com.mongodb.client.model.Updates.set;
 import java.util.ArrayList;
 import java.util.List;
 
-/*
-DBObject
-BasicDBObject
-É através deles que a API transforma os parametros Map em um documento JSON.
-
-
-os metodos de CRUD da API são acessives através de um objeto 
-DBCollection. Estes metodos recebem como parametros os objetos 
-DBObject ou BasicDBObject.
-*/
-
 import org.bson.codecs.configuration.CodecRegistry;
 import org.bson.codecs.pojo.PojoCodecProvider;
 import org.bson.types.ObjectId;
@@ -32,7 +21,9 @@ import vo.Usuario;
 import static com.mongodb.client.model.Updates.combine;
 import static org.bson.codecs.configuration.CodecRegistries.fromProviders;
 import static org.bson.codecs.configuration.CodecRegistries.fromRegistries;
-//java.util.Map ----> Fizemos assim em conseqüência de trabalharmos com chave:valor
+import org.bson.json.JsonMode;
+import org.bson.json.JsonWriterSettings;
+
 /**
  *
  * @author tiago
@@ -45,11 +36,10 @@ public class UsuarioDao implements IDao{
     MongoCollection<Usuario> collection = MongoConnection.getInstance().getDB()
                     .getCollection("Usuarios", Usuario.class)
                     .withCodecRegistry(pojoCodecRegistry);
-        
-    
+                                    
     protected MongoCollection getDbCollection() {
         return collection;
-    }
+    }   
             
     public void salvar(Usuario usuario) {        
             
@@ -62,9 +52,9 @@ public class UsuarioDao implements IDao{
         collection.insertMany(usuario);        
     }    
     
-    public List listar() {
-        List<Usuario> listaUsuarios = new ArrayList<Usuario>();        
+    public List<Usuario> listar() {
         
+        List<Usuario> listaUsuarios = new ArrayList<Usuario>();                        
         for (Usuario usuario : collection.find()) {
             listaUsuarios.add(usuario);
         }
@@ -79,9 +69,8 @@ public class UsuarioDao implements IDao{
         return usuario;
     }
     
-    public Usuario listarPorNomeEmail(String nome, String senha){
-        Usuario usuario = collection.find(and (eq("nomeCompleto", nome),eq("senha", senha))).first();
-        //Usuario usuario = collection.find(eq(nome, senha)).first();
+    public Usuario listarPorCpfEmail(String cpf, String senha){
+        Usuario usuario = collection.find(and (eq("cpf", cpf),eq("senha", senha))).first();        
         return usuario;
     }
     

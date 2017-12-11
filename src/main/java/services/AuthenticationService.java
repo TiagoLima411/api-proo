@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package servlets;
+package services;
 
 /**
  *
@@ -28,26 +28,26 @@ public class AuthenticationService {
         // authentication. Example "Basic YWRtaW46YWRtaW4="
         final String encodedUserPassword = authCredentials.replaceFirst("Basic"
                 + " ", "");
-        String usernameAndPassword = null;
+        String cpfAndPassword = null;
         try {
             byte[] decodedBytes = Base64.getDecoder().decode(
                     encodedUserPassword);
-            usernameAndPassword = new String(decodedBytes, "UTF-8");
+            cpfAndPassword = new String(decodedBytes, "UTF-8");
         } catch (IOException e) {
             e.printStackTrace();
         }
         final StringTokenizer tokenizer = new StringTokenizer(
-                usernameAndPassword, ":");
-        final String username = tokenizer.nextToken();
+                cpfAndPassword, ":");
+        final String cpf = tokenizer.nextToken();
         final String password = tokenizer.nextToken();
         
         UsuarioDao usuarioDao = new UsuarioDao();
-        Usuario usuario = usuarioDao.listarPorNomeEmail(username, password);
+        Usuario usuario = usuarioDao.listarPorCpfEmail(cpf, password);
                 
         // we have fixed the userid and password as admin
         // call some UserService/LDAP here
         
-        boolean authenticationStatus = usuario.getNomeCompleto().equals(username)
+        boolean authenticationStatus = usuario.getCpf().equals(cpf)
                 && usuario.getSenha().equals(password);
         return authenticationStatus;
     }
