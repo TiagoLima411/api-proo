@@ -21,8 +21,6 @@ import vo.Usuario;
 import static com.mongodb.client.model.Updates.combine;
 import static org.bson.codecs.configuration.CodecRegistries.fromProviders;
 import static org.bson.codecs.configuration.CodecRegistries.fromRegistries;
-import org.bson.json.JsonMode;
-import org.bson.json.JsonWriterSettings;
 
 /**
  *
@@ -90,17 +88,17 @@ public class UsuarioDao{
                         set("nomeCompleto", nomeCompleto)));                
     }
     
-    public void atualizarPorId(String id, Usuario usuario){
+    public void atualizarPorCpf(String cpf, Usuario usuario){
         try{            
-            collection.replaceOne(eq("_id", new ObjectId(id)), usuario);
+            collection.replaceOne(eq("cpf", cpf), usuario);            
         }catch(Exception ex){
             System.out.println("Não foi possível atualizar usuario "+ex.getMessage());
         }
     }
         
-    public void removerPorId(String id){
+    public void removerPorCpf(String cpf){
         try{
-            collection.deleteOne(eq("_id", new ObjectId(id)));
+            collection.deleteOne(eq("cpf", cpf));
         }catch(Exception ex){
             System.out.println("Não foi possível deletar usuario"+ex.getMessage());
         }
