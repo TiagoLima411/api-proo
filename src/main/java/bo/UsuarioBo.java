@@ -3,16 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package services;
+package bo;
 
-
-import java.io.IOException;
 /**
  *
  * @author tiago
  */
-public class SendEmail {
-    public void enviarEmail(){
+public class UsuarioBo {    
+    
+    public void usuarioBo(){
         
     }
 }

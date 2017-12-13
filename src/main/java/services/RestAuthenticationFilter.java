@@ -32,8 +32,7 @@ public class RestAuthenticationFilter implements javax.servlet.Filter {
             HttpServletRequest httpServletRequest = (HttpServletRequest) request;
             String authCredentials = httpServletRequest
                     .getHeader(AUTHENTICATION_HEADER);
-
-            // better injected
+            
             AuthenticationService authenticationService = new AuthenticationService();
 
             boolean authenticationStatus = authenticationService
@@ -44,8 +43,7 @@ public class RestAuthenticationFilter implements javax.servlet.Filter {
                 response.setContentType("application/json");
             } else if (response instanceof HttpServletResponse) {
                 HttpServletResponse httpServletResponse = (HttpServletResponse) response;
-                httpServletResponse
-                        .setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                httpServletResponse.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Permissão negada verifique seu cpf ou senha");
                 
                 PrintWriter out = response.getWriter();
                 out.println("SC_UNAUTHORIZED");

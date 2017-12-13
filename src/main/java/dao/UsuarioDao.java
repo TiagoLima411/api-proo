@@ -26,7 +26,7 @@ import static org.bson.codecs.configuration.CodecRegistries.fromRegistries;
  *
  * @author tiago
  */
-public class UsuarioDao{                
+public class UsuarioDao implements IDao{                
     
     CodecRegistry pojoCodecRegistry = fromRegistries(MongoClient.getDefaultCodecRegistry(),
                 fromProviders(PojoCodecProvider.builder().automatic(true).build()));
@@ -60,7 +60,7 @@ public class UsuarioDao{
         return listaUsuarios;
     }    
     
-    public Usuario listarPorCpf(String cpf){                                                       
+    public Usuario listarPorCpf(String cpf){
         Usuario usuario = null;
         usuario = collection.find(eq("cpf", cpf)).first();            
         
@@ -125,8 +125,5 @@ public class UsuarioDao{
         
         collection.deleteMany(eq("email", null));
     }*/
-        
-    
-    
-    
+                    
 }

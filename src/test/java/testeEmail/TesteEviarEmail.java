@@ -3,16 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package services;
-
-
+package testeEmail;
+import com.sendgrid.*;
 import java.io.IOException;
+import org.junit.Test;
 /**
  *
  * @author tiago
  */
-public class SendEmail {
-    public void enviarEmail(){
-        
-    }
+public class TesteEviarEmail {    
+    
 }

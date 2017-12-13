@@ -5,8 +5,6 @@
  */
 package testesMetodosDao;
 
-import static com.mongodb.client.model.Filters.eq;
-import dao.IDao;
 import dao.UsuarioDao;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,12 +16,13 @@ import vo.Usuario;
  *
  * @author tiago
  */
-public class TesteUsuarioDao{/*
-    
+public class TesteUsuarioDao{
+    /*
     @Test
     public void deveInserirUsuarioNoBanco(){
         Usuario usuario = new Usuario(
             "Tiago de Lima Alves",
+            "056",
             "123456",
             "email@hotmail.com",   
             "12341234",
@@ -47,7 +46,7 @@ public class TesteUsuarioDao{/*
     public void deveSalvarUmaListaDeUsuarios(){
         List<Usuario> usuario = new ArrayList<Usuario>();
         for(int i=0; i<100; i++){
-            usuario.add(new Usuario("Tiago de Lima Alves","123455","hotmail.com","uuuu9999","88888888",new Endereco("Maceio","Tabuleirio","57084040","A 40","007","")));
+            usuario.add(new Usuario("Tiago de Lima Alves","045","123455","hotmail.com","uuuu9999","88888888",new Endereco("Maceio","Tabuleirio","57084040","A 40","007","")));
         }
         UsuarioDao usuarioDao = new UsuarioDao();
         usuarioDao.salvarLista(usuario);
@@ -57,8 +56,8 @@ public class TesteUsuarioDao{/*
     @Test
     public void deveListarTodosOsUsuarios(){
         List<Usuario> usuarioInserir = new ArrayList<Usuario>();
-        /*for(int i=0; i<100; i++){
-            usuarioInserir.add(new Usuario("Tiago de Lima Alves","123455","hotmail.com","uuuu9999","88888888",new Endereco("Maceio","Tabuleirio","57084040","A 40","007","")));
+        for(int i=0; i<100; i++){
+            usuarioInserir.add(new Usuario("Tiago de Lima Alves","000","123455","hotmail.com","uuuu9999","88888888",new Endereco("Maceio","Tabuleirio","57084040","A 40","007","")));
         }
         UsuarioDao usuarioDao = new UsuarioDao();
         List<Usuario> listUsuario = new ArrayList<Usuario>();
@@ -77,7 +76,7 @@ public class TesteUsuarioDao{/*
         try{
             UsuarioDao usuarioDao = new UsuarioDao();
             Usuario usuario = new Usuario();
-            usuario = usuarioDao.listarPorId("5a255b126394faaaa39009a4");
+            usuario = usuarioDao.listarPorCpf("00066677700");
         }catch(Exception ex){
             System.out.println("Não foi possível localizar Usuario"+ex.getMessage());
         }
@@ -96,9 +95,9 @@ public class TesteUsuarioDao{/*
     @Test//Refatorar futuramente 
     public void deveAtualizarUmUsuarioPassandoIdEObjeto(){
         try{
-            Usuario usuario = new Usuario("Tiago de Lima Alves","123455","hotmail.com","uuuu9999","88888888",new Endereco("Maceio","Tabuleirio","57084040","A 40","007",""));
+            Usuario usuario = new Usuario("Tiago de Lima Alves","000","123455","hotmail.com","uuuu9999","88888888",new Endereco("Maceio","Tabuleirio","57084040","A 40","007",""));
             UsuarioDao usuarioDao = new UsuarioDao();
-            usuarioDao.atualizarPorId("5a255b126394faaaa39009a4",usuario);
+            usuarioDao.atualizarPorId("5a2e73816394faaaa3cc1502", "hotmail.com", "Tiago de Lima Alves");
         }catch(Exception ex){
             System.out.println("Não foi possível atualizar usuario"+ex.getMessage());
         }        
@@ -108,7 +107,7 @@ public class TesteUsuarioDao{/*
     public void deveRemoverUmUsuarioPassandoIdComoParametro(){
         try{
             UsuarioDao usuarioDao = new UsuarioDao();
-            usuarioDao.removerPorId("5a255b126394faaaa39009a4");
+            usuarioDao.removerPorCpf("00099988866");
         }catch(Exception ex){
             System.out.println("Não foi possível remover usuario"+ex.getMessage());
         }                

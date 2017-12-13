@@ -47,8 +47,8 @@ public class AuthenticationService {
         // we have fixed the userid and password as admin
         // call some UserService/LDAP here
         
-        boolean authenticationStatus = usuario.getCpf().equals(cpf)
-                && usuario.getSenha().equals(password);
+        boolean authenticationStatus = "admin".equals(cpf)
+                && "admin".equals(password);
         return authenticationStatus;
     }
 }

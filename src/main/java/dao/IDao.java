@@ -5,12 +5,7 @@
  */
 package dao;
 
-import static com.mongodb.client.model.Filters.eq;
-import static com.mongodb.client.model.Updates.combine;
-import static com.mongodb.client.model.Updates.set;
-import java.util.ArrayList;
 import java.util.List;
-import org.bson.types.ObjectId;
 import vo.Usuario;
 
 /**
@@ -21,17 +16,19 @@ public interface IDao {
     
     public void salvar(Usuario usuario);
     
-    public void salvarLista(List usuario);
+    public void salvarLista(List usuario);                        
     
-    public List listar();
+    public List<Usuario> listar();
     
-    public Usuario listarPorId(String id);    
+    public Usuario listarPorCpf(String cpf);
+    
+    public Usuario authenticationPorCpfEmail(String cpf, String senha);        
     
     public void atualizarPorId(String id, String email, String nomeCompleto);
     
-    public void atualizarPorId(String id, Usuario usuario);
+    public void atualizarPorCpf(String cpf, Usuario usuario);
         
-    public void removerPorId(String id);
+    public void removerPorCpf(String cpf);
         
     public void removerPorAtributo(String atributo, String valor);
 }

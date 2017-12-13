@@ -5,16 +5,12 @@
  */
 package testeCollections;
 
-import com.mongodb.DBCursor;
-import com.mongodb.DBObject;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
-import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import static com.mongodb.client.model.Filters.and;
 import static com.mongodb.client.model.Filters.eq;
-import static com.mongodb.client.model.Filters.lt;
 import static com.mongodb.client.model.Updates.combine;
 import static com.mongodb.client.model.Updates.set;
 import com.mongodb.client.result.DeleteResult;
@@ -46,7 +42,7 @@ public class TesteQueries {
     MongoCollection<Usuario> collection = database
                     .getCollection("Usuarios", Usuario.class)
                     .withCodecRegistry(pojoCodecRegistry);
-    /*
+    
     @Test
     public void deveInserirUsuarioNoBanco() {
         Endereco en = new Endereco("Maceio","Tabuleirio","57084040","A 40","007","");
@@ -61,19 +57,19 @@ public class TesteQueries {
         //collection.deleteOne(eq("nomeCompleto", "Tiago de Lima Alves"));
         
     }
-    
+    /*
     @Test
     public void deveInserirVariosUsuariosnoBanco(){
         List<Usuario> usuario = new ArrayList<Usuario>();
         for(int i=0; i<100; i++){
-            usuario.add(new Usuario("Tiago de Lima Alves","123455","hotmail.com","uuuu9999","88888888",new Endereco("Maceio","Tabuleirio","57084040","A 40","007","")));
+            usuario.add(new Usuario("Tiago de Lima Alves","045","123455","hotmail.com","uuuu9999","88888888",new Endereco("Maceio","Tabuleirio","57084040","A 40","007","")));
         }
         
         collection.insertMany(usuario);
         collection.deleteMany(eq("nomeCompleto", "Tiago de Lima Alves"));
-    }*/
+    }
     
-    /*
+    
     @Test
     public void deveImprimirNoConsoleTodosOsUsuariosDaCollection() {
         List<Usuario> usuarioInserido = new ArrayList<Usuario>();
@@ -100,7 +96,7 @@ public class TesteQueries {
         try{
             
             Endereco en = new Endereco("Maceio","Tabuleirio","57084040","A 40","007","");
-            Usuario us = new Usuario("Tiago de Lima Alves","123456","hotmail.com","uuuu9999","88888888",en);            
+            Usuario us = new Usuario("Tiago de Lima Alves","054","123456","hotmail.com","uuuu9999","88888888",en);            
             collection.insertOne(us);
                         
             Usuario usuarioBuscar = collection.find(and (eq("nomeCompleto", "Tiago de Lima Alves"),eq("senha", "123456"))).first();
@@ -129,7 +125,7 @@ public class TesteQueries {
         
         List<Usuario> usuario = new ArrayList<Usuario>();
         for(int i=0; i<100; i++){
-            usuario.add(new Usuario("Tiago de Lima Alves","123455","hotmail.com","uuuu9999","88888888",new Endereco("Maceio","Tabuleirio","57084040","A 40","007","")));
+            usuario.add(new Usuario("Tiago de Lima Alves","065","123455","hotmail.com","uuuu9999","88888888",new Endereco("Maceio","Tabuleirio","57084040","A 40","007","")));
         }
         
         UpdateResult updateResult = collection.updateMany((eq( "email", "hotmail.com")), set("email", null));        
@@ -142,7 +138,7 @@ public class TesteQueries {
     public void deveAtualizarUsuarioEmEspecificoPorId(){
         try{
             Endereco en = new Endereco("Rio Largo","Tabuleirio do Pinto","57084040","A 40","007","");
-            Usuario us = new Usuario("Camilla dos Santos","123455","hotmail.com","uuuu9999","88888888",en);
+            Usuario us = new Usuario("Camilla dos Santos","045","123455","hotmail.com","uuuu9999","88888888",en);
             collection.replaceOne(eq("_id", new ObjectId("5a2440806394faaaa3884741")), us);
         }catch(Exception ex){
             System.out.println("Não foi possível atualizar usuario "+ex.getMessage());
@@ -162,10 +158,11 @@ public class TesteQueries {
     public void deveDeletarTodosOsUsuariosQueOFiltroEncontrar(){
         List<Usuario> usuario = new ArrayList<Usuario>();
         for(int i=0; i<100; i++){
-            usuario.add(new Usuario("Tiago de Lima Alves","123455","hotmail.com","uuuu9999","88888888",new Endereco("Maceio","Tabuleirio","57084040","A 40","007","")));
+            usuario.add(new Usuario("Tiago de Lima Alves","065","123455","hotmail.com","uuuu9999","88888888",new Endereco("Maceio","Tabuleirio","57084040","A 40","007","")));
         }
         
         DeleteResult deleteResult = collection.deleteMany(eq("email", "hotmail.com"));
         System.out.println("Registros Removidos:>"+deleteResult.getDeletedCount());
-    }*/
+    }
+*/    
 }

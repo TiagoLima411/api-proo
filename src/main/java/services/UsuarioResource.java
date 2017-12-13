@@ -5,7 +5,10 @@
  */
 package services;
 import com.google.gson.Gson;
+import com.itextpdf.text.DocumentException;
 import dao.UsuarioDao;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.util.List;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -15,8 +18,10 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
+import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.StreamingOutput;
+import reports.UsuariosReport;
 import vo.Usuario;
 /**
  *
@@ -26,18 +31,21 @@ import vo.Usuario;
 public class UsuarioResource {
 
     @POST
-    @Consumes(MediaType.APPLICATION_JSON)
+    @Consumes("application/json")
     @Path("/inserir")
     public Response insertCliente(String content) {
+        if (content == null) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+                    .entity("Usuario vazio ou faltando atributo").build();
+        }
         try {
             Gson g = new Gson();
-            Usuario usuario = (Usuario) g.fromJson(content, Usuario.class);
-
+            Usuario usuario = (Usuario) g.fromJson(content, Usuario.class);            
             UsuarioDao clienteDao = new UsuarioDao();
             clienteDao.salvar(usuario);
-            return Response.ok(g.toJson(usuario)).build();
+            return Response.ok(g.toJson(usuario)).entity("Usuario salvo: "+content).build();
         } catch (Exception e) {
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity("Erro do Servidor: "+e).build();
         }
 
     }
@@ -108,5 +116,22 @@ public class UsuarioResource {
         } catch (Exception e) {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
-    }
+    }    
+
+    @GET
+    @Path("/relatorio")
+    @Produces("application/pdf")
+    public StreamingOutput generate() {
+        return new StreamingOutput() {
+            @Override
+            public void write(OutputStream output) throws IOException, WebApplicationException {
+                try {
+                    UsuariosReport report = new UsuariosReport();
+                    report.generate(output);
+                } catch (DocumentException e) {
+                    throw new IOException("error generating PDF", e);
+                }
+            }
+        };
+    }    
 }
