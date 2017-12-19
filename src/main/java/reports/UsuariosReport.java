@@ -16,7 +16,6 @@ import com.itextpdf.text.pdf.PdfWriter;
 import dao.UsuarioDao;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.util.ArrayList;
 import java.util.List;
 import vo.Usuario;
 
