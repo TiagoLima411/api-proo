@@ -2,7 +2,7 @@
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
- */
+ 
 package emails;
 
 import com.sendgrid.ASM;
@@ -262,8 +262,8 @@ public class Example {/*
     System.out.println(response.getHeaders());
   }*/
 
-  public static void main(String[] args) throws IOException {
-    try {
+  public static void main(String[] args) {
+    /*try {
       SendGrid sg = new SendGrid(System.getenv("SENDGRID_API_KEY"));
       Request request = new Request();
       request.setMethod(Method.POST);
@@ -275,7 +275,7 @@ public class Example {/*
       System.out.println(response.getHeaders());
     } catch (IOException ex) {
       throw ex;
-    }
+    }*/
 }
 
 }
