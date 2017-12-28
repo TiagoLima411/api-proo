@@ -27,7 +27,7 @@ public class RestAuthenticationFilter implements javax.servlet.Filter {
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response,
-            FilterChain filter) throws IOException, ServletException {
+            FilterChain filter) throws IOException, ServletException {        
         if (request instanceof HttpServletRequest) {
             HttpServletRequest httpServletRequest = (HttpServletRequest) request;
             String authCredentials = httpServletRequest

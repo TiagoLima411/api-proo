@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package services;
+import bo.UsuarioBo;
 import com.google.gson.Gson;
 import com.itextpdf.text.DocumentException;
 import dao.UsuarioDao;
@@ -34,18 +35,16 @@ public class UsuarioResource {
     @Consumes("application/json")
     @Path("/inserir")
     public Response insertCliente(String content) {
-        if (content == null) {
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
-                    .entity("Usuario vazio ou faltando atributo").build();
-        }
+        String message = null;        
         try {
             Gson g = new Gson();
-            Usuario usuario = (Usuario) g.fromJson(content, Usuario.class);            
-            UsuarioDao clienteDao = new UsuarioDao();
-            clienteDao.salvar(usuario);
-            return Response.ok(g.toJson(usuario)).entity("Usuario salvo: "+content).build();
-        } catch (Exception e) {
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity("Erro do Servidor: "+e).build();
+            Usuario usuario = (Usuario) g.fromJson(content, Usuario.class);
+            UsuarioBo usuarioBo = new UsuarioBo();
+            message = usuarioBo.validarUsuario(usuario);
+            System.out.println(message);
+            return Response.ok().entity(g.toJson(message)).build();            
+        } catch (Exception e) {            
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(message).build();
         }
 
     }
@@ -57,8 +56,8 @@ public class UsuarioResource {
         try {
             List<Usuario> lista;
             UsuarioDao usuarioDao = new UsuarioDao();
-            lista = usuarioDao.listar();
             Gson g = new Gson();
+            lista = usuarioDao.listar();            
             System.out.println("lista:>" + lista);
             return Response.ok(g.toJson(lista)).build();
         } catch (Exception e) {
@@ -69,7 +68,7 @@ public class UsuarioResource {
     @GET
     @Path("/usuario/{cpf}")
     @Produces("application/json")
-    public Response listarUsuarioPorId(@PathParam("cpf") String cpf) {
+    public Response listarUsuarioPorCPF(@PathParam("cpf") String cpf) {
         try {
             UsuarioDao usuarioDao = new UsuarioDao();
             Usuario usuario = usuarioDao.listarPorCpf(cpf);
@@ -116,7 +115,7 @@ public class UsuarioResource {
         } catch (Exception e) {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
-    }    
+    }
 
     @GET
     @Path("/relatorio")
@@ -133,5 +132,5 @@ public class UsuarioResource {
                 }
             }
         };
-    }    
+    }
 }
