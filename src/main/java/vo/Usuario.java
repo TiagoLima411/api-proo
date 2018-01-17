@@ -26,8 +26,7 @@ public class Usuario {
     public Usuario (){
         
     }
-    
-    
+        
     public Usuario(        
         String nomeCompleto,
         String cpf,
@@ -44,7 +43,7 @@ public class Usuario {
         this.fone2 = fone2;
         this.endereco = endereco;
     }
-    
+
     public ObjectId getId() {
         return id;
     }
@@ -63,7 +62,7 @@ public class Usuario {
 
     public String getCpf() {
         return cpf;
-    }
+    }   
 
     public void setCpf(String cpf) {
         this.cpf = cpf;
