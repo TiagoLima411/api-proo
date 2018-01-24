@@ -13,18 +13,15 @@ import org.bson.types.ObjectId;
  * @author tiago
  */
 
-public class Usuario {    
-    
-    public enum TipoUsuario {admin,cliente};
-    
+public class Usuario {                
     private ObjectId id;
     private String nomeCompleto;
     private String cpf;
     private String senha;
     private String email;
     private String fone1;
-    private String fone2;     
-    private TipoUsuario tipo;
+    private String fone2;
+    private boolean admin = false;
     private Endereco endereco;    
     
     public Usuario (){
@@ -37,7 +34,8 @@ public class Usuario {
         String senha,
         String email,   
         String fone1,
-        String fone2,        
+        String fone2,
+        boolean admin,
         Endereco endereco){
         this.nomeCompleto = nomeCompleto;
         this.cpf = cpf;
@@ -45,16 +43,8 @@ public class Usuario {
         this.senha = senha;
         this.fone1 = fone1;
         this.fone2 = fone2;
-        this.tipo = tipo.cliente;
+        this.admin = admin;
         this.endereco = endereco;
-    }
-
-    public TipoUsuario getTipo() {
-        return tipo;
-    }
-
-    public void setTipo(TipoUsuario tipo) {
-        this.tipo = tipo;
     }
 
     public ObjectId getId() {
@@ -113,6 +103,14 @@ public class Usuario {
         this.fone2 = fone2;
     }
 
+    public boolean isAdmin() {
+        return admin;
+    }
+
+    public void setAdmin(boolean admin) {
+        this.admin = admin;
+    }
+    
     public Endereco getEndereco() {
         return endereco;
     }
