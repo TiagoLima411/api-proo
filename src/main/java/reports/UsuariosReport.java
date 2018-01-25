@@ -42,7 +42,7 @@ public class UsuariosReport {
         document.add(par1);
 
         Paragraph listCli = new Paragraph();
-        Font fontListCli = new Font(Font.FontFamily.HELVETICA, 10, Font.NORMAL, BaseColor.BLACK);
+        Font fontListCli = new Font(Font.FontFamily.HELVETICA, 2, Font.NORMAL, BaseColor.BLACK);
 
         listCli.setAlignment(Element.ALIGN_JUSTIFIED);
         listCli.add(new Phrase(Chunk.NEWLINE));
@@ -50,28 +50,32 @@ public class UsuariosReport {
         document.add(listCli);
 
         PdfPTable table = new PdfPTable(4);
-        PdfPCell cell1 = new PdfPCell(new Paragraph("Codigo", FontFactory.getFont("Arial", 8, Font.BOLD, BaseColor.RED)));
-        PdfPCell cell2 = new PdfPCell(new Paragraph("Nome", FontFactory.getFont("Arial", 8, Font.BOLD, BaseColor.RED)));
-        PdfPCell cell3 = new PdfPCell(new Paragraph("Sobre Nome", FontFactory.getFont("Arial", 8, Font.BOLD, BaseColor.RED)));
-        PdfPCell cell4 = new PdfPCell(new Paragraph("fone", FontFactory.getFont("Arial", 8, Font.BOLD, BaseColor.RED)));
+        PdfPCell cell1 = new PdfPCell(new Paragraph("Nome", FontFactory.getFont("Arial", 10, Font.BOLD, BaseColor.RED)));
+        PdfPCell cell2 = new PdfPCell(new Paragraph("CPF", FontFactory.getFont("Arial", 10, Font.BOLD, BaseColor.RED)));
+        PdfPCell cell3 = new PdfPCell(new Paragraph("E-mail", FontFactory.getFont("Arial", 10, Font.BOLD, BaseColor.RED)));
+        PdfPCell cell4 = new PdfPCell(new Paragraph("Fone", FontFactory.getFont("Arial", 10, Font.BOLD, BaseColor.RED)));
 
         table.addCell(cell1);
         table.addCell(cell2);
         table.addCell(cell3);
         table.addCell(cell4);
-
+        
         for (Usuario usuario : lista) {
-            table.addCell(usuario.getNomeCompleto());
-            table.addCell(usuario.getCpf());
-            table.addCell(usuario.getEmail());
-            table.addCell(usuario.getFone1());
+            PdfPCell nome = new PdfPCell(new Paragraph(usuario.getNomeCompleto(), FontFactory.getFont("Arial", 8, Font.NORMAL, BaseColor.BLACK)));
+            PdfPCell cpf = new PdfPCell(new Paragraph(usuario.getCpf(), FontFactory.getFont("Arial", 8, Font.NORMAL, BaseColor.BLACK)));                                                                                                                                                                                                                                                                                         
+            PdfPCell mail = new PdfPCell(new Paragraph(usuario.getEmail(), FontFactory.getFont("Arial", 8, Font.NORMAL, BaseColor.BLACK)));
+            PdfPCell fone = new PdfPCell(new Paragraph(usuario.getFone1(), FontFactory.getFont("Arial", 8, Font.NORMAL, BaseColor.BLACK)));
+            table.addCell(nome);
+            table.addCell(cpf);
+            table.addCell(mail);
+            table.addCell(fone);
         }
 
         document.add(table);
 
-        document.close();
+        
 
-        document.add(new Paragraph("Test"));
+        
         document.close();
     }
 }
