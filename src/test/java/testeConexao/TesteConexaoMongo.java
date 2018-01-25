@@ -5,6 +5,7 @@
  */
 package testeConexao;
 
+import static org.junit.Assert.*;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
 import com.mongodb.client.MongoDatabase;
@@ -13,40 +14,39 @@ import org.bson.codecs.UuidCodec;
 import org.bson.codecs.configuration.CodecRegistries;
 import org.bson.codecs.configuration.CodecRegistry;
 import org.junit.Test;
-import util.MongoConnection;
 
 /**
  *
  * @author tiago
  */
 public class TesteConexaoMongo {
-    private static MongoConnection uniqInstance;
-    private static int mongoInstance = 1;
-    
+
     private MongoClient mongo;
-    private MongoDatabase db;
-    private String host = "@ds241895.mlab.com:41895";
-    private String user = "root";
-    private String password = "root";
-    private String dataBase = "proo";              
-    
-    CodecRegistry codecRegistry =
-        CodecRegistries.fromRegistries(CodecRegistries.fromCodecs(new UuidCodec(UuidRepresentation.STANDARD)),
-                                       MongoClient.getDefaultCodecRegistry());
-    
-    public static synchronized MongoConnection getInstance() {
-        if (uniqInstance == null) {
-            uniqInstance = new MongoConnection();
-        }
-        return uniqInstance;
-    }
-    @Test
-    public void deveCriarUmaConexaoComOBancoDeDados() {
+    private MongoDatabase db;                 
+
+    public MongoDatabase getDB(String host, String user, String password, String dataBase) {
         if (mongo == null) {
-            MongoClientURI uri = new MongoClientURI("mongodb://"+user+":"+password+host+"/"+dataBase);
+            MongoClientURI uri = new MongoClientURI("mongodb://" + user + ":" + password + host + "/" + dataBase);
             mongo = new MongoClient(uri);
-            db = mongo.getDatabase("proo").withCodecRegistry(codecRegistry);
-            System.out.println("Mongo instance equals :> " + mongoInstance++);
+            db = mongo.getDatabase("proo");
+        }
+        return db;
+    }
+
+    @Test
+    public void testDeveriaConectarDadosInformadosCorretamente() throws Exception {
+        MongoDatabase mongoDatabase = getDB("@ds241895.mlab.com:41895", "root", "root", "proo");
+        assertNotNull(mongoDatabase);
+        System.out.println("Database Mongo "+mongoDatabase);
+    }
+
+    @Test
+    public void testNaoDeveriaConectarSeDadosInformadosErrados() throws Exception {
+        MongoDatabase mongoDatabase = null;
+        try {
+            mongoDatabase = getDB("@ds241895.mlab.com:41895", "user", "password", "proo");
+        } catch (Exception e) {
+            assertNull(mongoDatabase);
         }        
     }
 }

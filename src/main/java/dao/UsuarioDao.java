@@ -35,15 +35,13 @@ public class UsuarioDao implements IDao{
                     .getCollection("Usuarios", Usuario.class)
                     .withCodecRegistry(pojoCodecRegistry);
                                     
-    protected MongoCollection getDbCollection() {
+    /*protected MongoCollection getDbCollection() {
         return collection;
-    }   
+    } */  
             
-    public void salvar(Usuario usuario) {        
-            
+    public void salvar(Usuario usuario) {                    
         collection.insertOne(usuario);
         System.out.println("Salvo:>"+usuario);
-        
     }    
     
     public void salvarLista(List usuario){
@@ -81,8 +79,7 @@ public class UsuarioDao implements IDao{
         Usuario usuario = collection.find(and (eq("cpf", cpf),eq("senha", senha))).first();        
         return usuario;
     }
-    
-    //Fazer sobrecarga de metodos
+        
     public void atualizarPorId(String id, String email, String nomeCompleto){        
         collection.updateOne(eq("_id",new ObjectId(id)), 
                 combine(set("email", email), 
@@ -111,20 +108,5 @@ public class UsuarioDao implements IDao{
         }catch(Exception ex){
             System.out.println("Atributo inválido"+ex.getMessage());
         }                
-    }
-    /*
-    @Test
-    public void deveAtualizarMultiplosUsuarios(){
-        
-        List<Usuario> usuario = new ArrayList<Usuario>();
-        for(int i=0; i<100; i++){
-            usuario.add(new Usuario("Tiago de Lima Alves","123455","hotmail.com","uuuu9999","88888888",new Endereco("Maceio","Tabuleirio","57084040","A 40","007","")));
-        }
-        
-        UpdateResult updateResult = collection.updateMany((eq( "email", "hotmail.com")), set("email", null));        
-        System.out.println("Atualizando Multiplos documentos "+updateResult.getModifiedCount());
-        
-        collection.deleteMany(eq("email", null));
-    }*/
-                    
+    }                        
 }

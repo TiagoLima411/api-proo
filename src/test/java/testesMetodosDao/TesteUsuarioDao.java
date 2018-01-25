@@ -5,9 +5,11 @@
  */
 package testesMetodosDao;
 
+import dao.IDao;
 import dao.UsuarioDao;
 import java.util.ArrayList;
 import java.util.List;
+import junit.framework.TestCase;
 import org.junit.Test;
 import vo.Endereco;
 import vo.Usuario;
@@ -16,17 +18,19 @@ import vo.Usuario;
  *
  * @author tiago
  */
-public class TesteUsuarioDao{
-    /*
+public class TesteUsuarioDao extends TestCase{
+    
     @Test
-    public void deveInserirUsuarioNoBanco(){
+    public void testDeveriaInserirUsuarioNoBanco(){
+        
         Usuario usuario = new Usuario(
-            "Tiago de Lima Alves",
-            "056",
+            "Usuario Teste",
+            "000",
             "123456",
             "email@hotmail.com",   
             "12341234",
             "43214312",
+            false,
             new Endereco(
                 "Maceio",
                 "B Bentes",
@@ -38,10 +42,10 @@ public class TesteUsuarioDao{
         );
         
         UsuarioDao usuarioDao = new UsuarioDao();
-        usuarioDao.salvar(usuario);
+        usuarioDao.salvar(usuario);        
         usuarioDao.removerPorAtributo("nomeCompleto", "Tiago de Lima Alves");
     }
-    
+    /*
     @Test
     public void deveSalvarUmaListaDeUsuarios(){
         List<Usuario> usuario = new ArrayList<Usuario>();
