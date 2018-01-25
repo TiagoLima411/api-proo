@@ -33,7 +33,7 @@ import vo.Usuario;
  *
  * @author tiago
  */
-public class TesteQueries {
+public class TesteQueries {/*
 
     CodecRegistry pojoCodecRegistry = fromRegistries(MongoClient.getDefaultCodecRegistry(),
             fromProviders(PojoCodecProvider.builder().automatic(true).build()));

@@ -10,7 +10,9 @@ import com.itextpdf.text.DocumentException;
 import dao.UsuarioDao;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -29,8 +31,8 @@ import vo.Usuario;
  * @author tiago
  */
 @Path("/usuarios")
-public class UsuarioResource {
-
+public class UsuarioResource {        
+    
     @POST
     @Consumes("application/json")
     @Path("/inserir")
@@ -40,9 +42,10 @@ public class UsuarioResource {
             Gson g = new Gson();
             Usuario usuario = (Usuario) g.fromJson(content, Usuario.class);
             UsuarioBo usuarioBo = new UsuarioBo();
-            message = usuarioBo.validarUsuario(usuario);
-            System.out.println(message);
-            return Response.ok().entity(g.toJson(message)).build();            
+            message = usuarioBo.salvarUsuario(usuario);
+            Map objMessage;
+            objMessage = ConvertMap.converterToMap(message);
+            return Response.ok().entity(g.toJson(objMessage)).build();            
         } catch (Exception e) {            
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(message).build();
         }
@@ -54,11 +57,10 @@ public class UsuarioResource {
     @Produces("application/json")
     public Response listarUsuarios() {
         try {
-            List<Usuario> lista;
-            UsuarioDao usuarioDao = new UsuarioDao();
+            List<Usuario> lista;            
             Gson g = new Gson();
-            lista = usuarioDao.listar();            
-            System.out.println("lista:>" + lista);
+            UsuarioBo usuarioBo = new UsuarioBo();
+            lista = usuarioBo.listarUsuarios();            
             return Response.ok(g.toJson(lista)).build();
         } catch (Exception e) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
@@ -68,13 +70,23 @@ public class UsuarioResource {
     @GET
     @Path("/usuario/{cpf}")
     @Produces("application/json")
-    public Response listarUsuarioPorCPF(@PathParam("cpf") String cpf) {
-        try {
-            UsuarioDao usuarioDao = new UsuarioDao();
-            Usuario usuario = usuarioDao.listarPorCpf(cpf);
-            Gson g = new Gson();
+    public Response listarUsuarioPorCPF(@PathParam("cpf") String cpf) {        
+        try {            
+            UsuarioBo usuarioBo = new UsuarioBo();
+            Usuario usuario = new Usuario();
+            usuario = usuarioBo.listarUsuarioPorCpf(cpf);
+            
+            Gson g = new Gson();     
+            
+            
+            if(usuario == null){
+                String message = "Cpf não existe!";
+                Map objMap = ConvertMap.converterToMap(message);
+                return Response.ok(g.toJson(objMap)).build();
+            }
+                                                       
             return Response.ok(g.toJson(usuario)).build();
-        } catch (Exception e) {
+        } catch (Exception e) {            
             return Response.status(Response.Status.NOT_FOUND).build();
         }
 
@@ -83,35 +95,31 @@ public class UsuarioResource {
     @PUT
     @Consumes("application/json")
     @Path("/atualizar/{cpf}")
-    public Response updateUsuario(String content, @PathParam("cpf") String cpf) {
+    public Response atualizaUsuario(String content, @PathParam("cpf") String cpf) {
         try {
             Gson g = new Gson();
-            Usuario usuario = (Usuario) g.fromJson(content, Usuario.class);
+            Usuario usuario = (Usuario) g.fromJson(content, Usuario.class);                        
 
-            UsuarioDao usuarioDao = new UsuarioDao();
-            usuarioDao.atualizarPorCpf(cpf, usuario);
+            UsuarioBo usuarioBo = new UsuarioBo();
+            String message = usuarioBo.atualizarUsuarioPorCpf(cpf, usuario);
+            
+            return Response.ok().entity(g.toJson(message)).build();                    
 
-            Usuario usuarioResp;
-            usuarioResp = usuarioDao.listarPorCpf(cpf);
-
-            return Response.ok(g.toJson(usuarioResp)).build();
-
-        } catch (Exception e) {
+        } catch (Exception e) {            
             return Response.status(Response.Status.NOT_FOUND).build();
         }
     }
 
     @DELETE
     @Consumes("application/json")
-    @Path("/remove/{cpf}")
+    @Path("/remover/{cpf}")
     public Response removeCliente(@PathParam("cpf") String cpf) {
-        try {
-            Usuario usuario = new UsuarioDao().listarPorCpf(cpf);
-            if (usuario != null) {
-                new UsuarioDao().removerPorCpf(cpf);
-            }
+        try {         
+            UsuarioBo usuarioBo = new UsuarioBo();
+            String message;
+            message = usuarioBo.removeUsuarioPorCpf(cpf);
             Gson g = new Gson();
-            return Response.ok(g.toJson(usuario)).build();
+            return Response.ok(g.toJson(message)).build();
         } catch (Exception e) {
             return Response.status(Response.Status.NOT_FOUND).build();
         }

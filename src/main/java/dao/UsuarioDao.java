@@ -46,8 +46,9 @@ public class UsuarioDao implements IDao{
         
     }    
     
-    public void salvarLista(List usuario){                        
-        collection.insertMany(usuario);        
+    public void salvarLista(List usuario){
+        
+        collection.insertMany(usuario);                
     }    
     
     public List<Usuario> listar() {
@@ -55,8 +56,8 @@ public class UsuarioDao implements IDao{
         List<Usuario> listaUsuarios = new ArrayList<Usuario>();                        
         for (Usuario usuario : collection.find()) {
             listaUsuarios.add(usuario);
-        }
-        
+            System.out.println("List:>"+usuario);
+        }        
         return listaUsuarios;
     }    
     
