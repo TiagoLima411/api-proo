@@ -5,21 +5,17 @@
  */
 package testeConexao;
 
-import static org.junit.Assert.*;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
 import com.mongodb.client.MongoDatabase;
-import org.bson.UuidRepresentation;
-import org.bson.codecs.UuidCodec;
-import org.bson.codecs.configuration.CodecRegistries;
-import org.bson.codecs.configuration.CodecRegistry;
+import junit.framework.TestCase;
 import org.junit.Test;
 
 /**
  *
  * @author tiago
  */
-public class TesteConexaoMongo {
+public class TesteConexaoMongo extends TestCase{
 
     private MongoClient mongo;
     private MongoDatabase db;                 
