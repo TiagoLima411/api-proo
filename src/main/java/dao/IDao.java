@@ -14,21 +14,14 @@ import vo.Usuario;
  */
 public interface IDao {
     
-    public void salvar(Usuario usuario);
-    
-    public void salvarLista(List usuario);                        
+    public void salvar(Usuario usuario);        
     
     public List<Usuario> listar();
     
-    public Usuario listarPorCpf(String cpf);
-    
-    public Usuario authenticationPorCpfEmail(String cpf, String senha);        
-    
-    public void atualizarPorId(String id, String email, String nomeCompleto);
+    public Usuario listarPorCpf(String cpf);                
     
     public void atualizarPorCpf(String cpf, Usuario usuario);
         
     public void removerPorCpf(String cpf);
-        
-    public void removerPorAtributo(String atributo, String valor);
+            
 }

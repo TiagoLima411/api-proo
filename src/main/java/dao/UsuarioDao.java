@@ -26,26 +26,21 @@ import static org.bson.codecs.configuration.CodecRegistries.fromRegistries;
  *
  * @author tiago
  */
-public class UsuarioDao implements IDao{                
+public class UsuarioDao implements IDao{
     
     CodecRegistry pojoCodecRegistry = fromRegistries(MongoClient.getDefaultCodecRegistry(),
                 fromProviders(PojoCodecProvider.builder().automatic(true).build()));
     
     MongoCollection<Usuario> collection = MongoConnection.getInstance().getDB()
                     .getCollection("Usuarios", Usuario.class)
-                    .withCodecRegistry(pojoCodecRegistry);
-                                    
-    /*protected MongoCollection getDbCollection() {
-        return collection;
-    } */  
+                    .withCodecRegistry(pojoCodecRegistry);                                    
             
     public void salvar(Usuario usuario) {                    
         collection.insertOne(usuario);
         System.out.println("Salvo:>"+usuario);
     }    
     
-    public void salvarLista(List usuario){
-        
+    public void salvarLista(List usuario){        
         collection.insertMany(usuario);                
     }    
     
@@ -61,21 +56,11 @@ public class UsuarioDao implements IDao{
     
     public Usuario listarPorCpf(String cpf){
         Usuario usuario = null;
-        usuario = collection.find(eq("cpf", cpf)).first();            
-        
-        Usuario usuarioRet = new Usuario();
-                                    
-        usuarioRet.setNomeCompleto(usuario.getNomeCompleto());
-        usuarioRet.setEmail(usuario.getEmail());
-        usuarioRet.setFone1(usuario.getFone1());
-        usuarioRet.setFone2(usuario.getFone2());
-        usuarioRet.setEndereco(usuario.getEndereco());
-        usuarioRet.setCpf(usuario.getCpf());
-        
-        return usuarioRet;
+        usuario = collection.find(eq("cpf", cpf)).first();                            
+        return usuario;
     }
         
-    public Usuario authenticationPorCpfEmail(String cpf, String senha){
+    public Usuario authenticationPorCpfESenha(String cpf, String senha){
         Usuario usuario = collection.find(and (eq("cpf", cpf),eq("senha", senha))).first();        
         return usuario;
     }

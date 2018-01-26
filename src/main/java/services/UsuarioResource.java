@@ -77,8 +77,7 @@ public class UsuarioResource {
             usuario = usuarioBo.listarUsuarioPorCpf(cpf);
             
             Gson g = new Gson();     
-            
-            
+                        
             if(usuario == null){
                 String message = "Cpf não existe!";
                 Map objMap = ConvertMap.converterToMap(message);
