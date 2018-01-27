@@ -5,6 +5,7 @@
  */
 package services;
 
+import bo.ProdutoBo;
 import com.google.gson.Gson;
 import java.util.Map;
 import javax.ws.rs.core.Context;
@@ -12,10 +13,12 @@ import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.Produces;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PUT;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import vo.Produto;
 
 /**
  * REST Web Service
@@ -28,33 +31,32 @@ public class ProdutoResource {
     @Context
     private UriInfo context;
 
-    /**
-     * Creates a new instance of ProdutoResource
-     */
     public ProdutoResource() {
     }
-
-    /**
-     * Retrieves representation of an instance of services.ProdutoResource
-     * @return an instance of java.lang.String
-     */
+    
     @GET
-    @Path("/hello")
+    @Path("/inserir")
     @Produces(MediaType.APPLICATION_JSON)
     public Response insertCliente(String content) {
         String message = null;        
         try {
-            Gson g = new Gson();                       
-            message = "hello produto";
-            Map objMessage;
-            objMessage = ConvertMap.converterToMap(message);
-            return Response.ok().entity(g.toJson(objMessage)).build();            
+            
+            Gson g = new Gson();
+            return Response.ok().entity(g.toJson("oi")).build();            
         } catch (Exception e) {            
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(message).build();
         }
 
     }
-
+/*
+            Gson g = new Gson();                  
+            ProdutoBo produtoBo = new ProdutoBo();
+            Produto produto = (Produto) g.fromJson(content, Produto.class);            
+            
+            message = produtoBo.salvarProduto(produto);
+            
+            Map objMessage;
+            objMessage = ConvertMap.converterToMap(message);*/
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     public void putJson(String content) {

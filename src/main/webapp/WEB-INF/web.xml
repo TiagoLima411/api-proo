@@ -11,7 +11,7 @@
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>ProdutoResource</servlet-name>
-        <url-pattern>/apiv3/produtos</url-pattern>
+        <url-pattern>/apiv3/produtos/*</url-pattern>
     </servlet-mapping>
     <welcome-file-list>
         <welcome-file>index.html</welcome-file>

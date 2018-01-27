@@ -16,14 +16,17 @@ public class Produto {
     private int cst;
     private int cfop;
     private String un;
-    private float qtd;
+    private int qtd;
     private float vUnitario;
     private float vTotal;
     private float bCalcIcms;
+    private float bCalcIpi;
     private float vIcms;
+    private float vIpi;
     private float aliqIcms;
+    private float aliqIpi;
 
-    public Produto(String codProd, String descricao, int ncm, int cst, int cfop, String un, float qtd, float vUnitario, float vTotal, float bCalcIcms, float vIcms, float aliqIcms) {
+    public Produto(String codProd, String descricao, int ncm, int cst, int cfop, String un, int qtd, float vUnitario, float aliqIcms, float aliqIpi) {
         this.codProd = codProd;
         this.descricao = descricao;
         this.ncm = ncm;
@@ -31,13 +34,11 @@ public class Produto {
         this.cfop = cfop;
         this.un = un;
         this.qtd = qtd;
-        this.vUnitario = vUnitario;
-        this.vTotal = vTotal;
-        this.bCalcIcms = bCalcIcms;
-        this.vIcms = vIcms;
+        this.vUnitario = vUnitario;                
         this.aliqIcms = aliqIcms;
+        this.aliqIpi = aliqIpi;
     }    
-    
+        
     public String getCodProd() {
         return codProd;
     }
@@ -86,11 +87,11 @@ public class Produto {
         this.un = un;
     }
 
-    public float getQtd() {
+    public int getQtd() {
         return qtd;
     }
 
-    public void setQtd(float qtd) {
+    public void setQtd(int qtd) {
         this.qtd = qtd;
     }
 
@@ -133,5 +134,29 @@ public class Produto {
     public void setAliqIcms(float aliqIcms) {
         this.aliqIcms = aliqIcms;
     }
-        
+
+    public float getbCalcIpi() {
+        return bCalcIpi;
+    }
+
+    public void setbCalcIpi(float bCalcIpi) {
+        this.bCalcIpi = bCalcIpi;
+    }
+
+    public float getvIpi() {
+        return vIpi;
+    }
+
+    public void setvIpi(float vIpi) {
+        this.vIpi = vIpi;
+    }
+
+    public float getAliqIpi() {
+        return aliqIpi;
+    }
+
+    public void setAliqIpi(float aliqIpi) {
+        this.aliqIpi = aliqIpi;
+    }
+               
 }
