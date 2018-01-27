@@ -10,7 +10,7 @@ package vo;
  * @author tiago
  */
 public class Produto {
-    private int codProd;
+    private String codProd;
     private String descricao;
     private int ncm;
     private int cst;
@@ -23,7 +23,7 @@ public class Produto {
     private float vIcms;
     private float aliqIcms;
 
-    public Produto(int codProd, String descricao, int ncm, int cst, int cfop, String un, float qtd, float vUnitario, float vTotal, float bCalcIcms, float vIcms, float aliqIcms) {
+    public Produto(String codProd, String descricao, int ncm, int cst, int cfop, String un, float qtd, float vUnitario, float vTotal, float bCalcIcms, float vIcms, float aliqIcms) {
         this.codProd = codProd;
         this.descricao = descricao;
         this.ncm = ncm;
@@ -38,11 +38,11 @@ public class Produto {
         this.aliqIcms = aliqIcms;
     }    
     
-    public int getCodProd() {
+    public String getCodProd() {
         return codProd;
     }
 
-    public void setCodProd(int codProd) {
+    public void setCodProd(String codProd) {
         this.codProd = codProd;
     }
 

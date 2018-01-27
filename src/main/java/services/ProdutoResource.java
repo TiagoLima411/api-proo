@@ -44,9 +44,7 @@ public class ProdutoResource {
     public Response insertCliente(String content) {
         String message = null;        
         try {
-            Gson g = new Gson();
-            
-            
+            Gson g = new Gson();                       
             message = "hello produto";
             Map objMessage;
             objMessage = ConvertMap.converterToMap(message);
@@ -57,10 +55,6 @@ public class ProdutoResource {
 
     }
 
-    /**
-     * PUT method for updating or creating an instance of ProdutoResource
-     * @param content representation for the resource
-     */
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     public void putJson(String content) {
