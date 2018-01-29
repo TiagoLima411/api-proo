@@ -7,6 +7,7 @@ package services;
 
 import bo.ProdutoBo;
 import com.google.gson.Gson;
+import dao.ProdutoDao;
 import java.util.Map;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
@@ -34,29 +35,29 @@ public class ProdutoResource {
     public ProdutoResource() {
     }
     
-    @GET
+    @POST
     @Path("/inserir")
     @Produces(MediaType.APPLICATION_JSON)
     public Response insertCliente(String content) {
-        String message = null;        
+        String message = "salvo";        
         try {
+            Gson g = new Gson();                  
+            ProdutoDao produtoDao = new ProdutoDao();
+            Produto produto = (Produto) g.fromJson(content, Produto.class);            
             
-            Gson g = new Gson();
-            return Response.ok().entity(g.toJson("oi")).build();            
+            produtoDao.salvar(produto);
+            
+            
+            Map objMessage;
+            objMessage = ConvertMap.converterToMap(message);
+            return Response.ok().entity(g.toJson(objMessage)).build();            
         } catch (Exception e) {            
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(message).build();
         }
 
     }
 /*
-            Gson g = new Gson();                  
-            ProdutoBo produtoBo = new ProdutoBo();
-            Produto produto = (Produto) g.fromJson(content, Produto.class);            
-            
-            message = produtoBo.salvarProduto(produto);
-            
-            Map objMessage;
-            objMessage = ConvertMap.converterToMap(message);*/
+            */
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     public void putJson(String content) {

@@ -60,18 +60,18 @@ public class ProdutoBo {
         
         if (!validaDescricao(produto.getDescricao()))
             return "Descrição do produto inválida (descrição deve conter entre 8 e 70 caracteres)";                
-    
-        float valorTotalProduto = calculaValorTotal(produto.getQtd(), produto.getvUnitario());
-        produto.setvTotal(valorTotalProduto);
-                
-        float valorDoICMS = calculaValorDoICMS(produto.getAliqIcms(), produto.getQtd(), produto.getvUnitario());
-        produto.setvIcms(valorDoICMS);
-        
-        float valorDoIPI = calculaValorDoIPI(produto.getAliqIpi(), produto.getQtd(), produto.getvUnitario());
-        produto.setvIpi(valorDoIPI);
-       
-        produto.setbCalcIcms(valorTotalProduto);
-        produto.setbCalcIpi(valorTotalProduto);
+//    
+//        float valorTotalProduto = calculaValorTotal(produto.getQtd(), produto.getvUnitario());
+//        produto.setvTotal(valorTotalProduto);
+//                
+//        float valorDoICMS = calculaValorDoICMS(produto.getAliqIcms(), produto.getQtd(), produto.getvUnitario());
+//        produto.setvIcms(valorDoICMS);
+//        
+//        float valorDoIPI = calculaValorDoIPI(produto.getAliqIpi(), produto.getQtd(), produto.getvUnitario());
+//        produto.setvIpi(valorDoIPI);
+//       
+//        produto.setbCalcIcms(valorTotalProduto);
+//        produto.setbCalcIpi(valorTotalProduto);
         
         try {            
             produtoDao.salvar(produto);
