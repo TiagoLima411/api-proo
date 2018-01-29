@@ -42,11 +42,10 @@ public class ProdutoResource {
         String message = "salvo";        
         try {
             Gson g = new Gson();                  
-            ProdutoDao produtoDao = new ProdutoDao();
+            ProdutoBo produtoBo = new ProdutoBo();
             Produto produto = (Produto) g.fromJson(content, Produto.class);            
             
-            produtoDao.salvar(produto);
-            
+            produtoBo.salvarProduto(produto);            
             
             Map objMessage;
             objMessage = ConvertMap.converterToMap(message);

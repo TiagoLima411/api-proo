@@ -10,6 +10,7 @@ import dao.UsuarioDao;
 import java.util.ArrayList;
 import java.util.List;
 import vo.Produto;
+
 import vo.Usuario;
 
 /**
@@ -18,18 +19,18 @@ import vo.Usuario;
  */
 public class ProdutoBo {
     
-    private float calculaValorTotal(int qtd, float precoUnidade){
+    private float calculaValorTotal(float qtd, float precoUnidade){
         float precoTotal = precoUnidade * qtd;
         return precoTotal;
     }
     
-    private float calculaValorDoICMS(float porcentagemICMS, int qtd, float precoUnidade){
+    private float calculaValorDoICMS(float porcentagemICMS, float qtd, float precoUnidade){
         float valorTotal = calculaValorTotal(qtd, precoUnidade);
         float valorICMS = valorTotal * (porcentagemICMS/100); 
         return valorICMS;
     }        
     
-    private float calculaValorDoIPI(float porcentagemIPI, int qtd, float precoUnidade){
+    private float calculaValorDoIPI(float porcentagemIPI, float qtd, float precoUnidade){
         float valorTotal = calculaValorTotal(qtd, precoUnidade);
         float valorIPI = valorTotal * (porcentagemIPI/100); 
         return valorIPI;
@@ -54,24 +55,25 @@ public class ProdutoBo {
     public String salvarProduto(Produto produto) throws Exception{
         
         ProdutoDao produtoDao = new ProdutoDao();
+
         
         if (!validaCodigoProduto(produto.getCodProd()))
             return "Codigo inválido (codigo deve conter entre 3 e 5 caracteres)";                
         
         if (!validaDescricao(produto.getDescricao()))
             return "Descrição do produto inválida (descrição deve conter entre 8 e 70 caracteres)";                
-//    
-//        float valorTotalProduto = calculaValorTotal(produto.getQtd(), produto.getvUnitario());
-//        produto.setvTotal(valorTotalProduto);
-//                
-//        float valorDoICMS = calculaValorDoICMS(produto.getAliqIcms(), produto.getQtd(), produto.getvUnitario());
-//        produto.setvIcms(valorDoICMS);
-//        
-//        float valorDoIPI = calculaValorDoIPI(produto.getAliqIpi(), produto.getQtd(), produto.getvUnitario());
-//        produto.setvIpi(valorDoIPI);
-//       
-//        produto.setbCalcIcms(valorTotalProduto);
-//        produto.setbCalcIpi(valorTotalProduto);
+    
+        float valorTotalProduto = calculaValorTotal(produto.getQtd(), produto.getVunt());
+        produto.setVtot(valorTotalProduto);
+                
+        float valorDoICMS = calculaValorDoICMS(produto.getAicm(), produto.getQtd(), produto.getVunt());
+        produto.setVicm(valorDoICMS);
+        
+        float valorDoIPI = calculaValorDoIPI(produto.getAipi(), produto.getQtd(), produto.getVunt());
+        produto.setVipi(valorDoIPI);
+       
+        produto.setBicm(valorTotalProduto);
+        produto.setBipi(valorTotalProduto);
         
         try {            
             produtoDao.salvar(produto);
