@@ -75,7 +75,7 @@ public class ProdutoReport extends PdfPageEventHelper {
 
         PdfPTable table = new PdfPTable(13);
         table.setWidthPercentage(100);
-        table.setTotalWidth(new float[]{1,3,1,1,1,1,1,1,1,1,1,1,1});
+        table.setTotalWidth(new float[]{1,4,1,1,1,1,1,1,1,1,1,1,1});
         PdfPCell cell1 = new PdfPCell(new Paragraph("Cod", FontFactory.getFont("Arial", 8, Font.NORMAL, BaseColor.DARK_GRAY)));
         PdfPCell cell2 = new PdfPCell(new Paragraph("Descricao", FontFactory.getFont("Arial", 8, Font.NORMAL, BaseColor.DARK_GRAY)));
         PdfPCell cell3 = new PdfPCell(new Paragraph("un", FontFactory.getFont("Arial", 8, Font.NORMAL, BaseColor.DARK_GRAY)));
