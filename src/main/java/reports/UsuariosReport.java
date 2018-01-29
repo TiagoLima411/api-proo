@@ -111,9 +111,7 @@ public class UsuariosReport extends PdfPageEventHelper {
             cont++;
         }
 
-        document.add(table);
-
-        document.newPage();
+        document.add(table);        
         
         document.close();
     }

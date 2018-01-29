@@ -8,7 +8,10 @@ package services;
 import bo.ProdutoBo;
 import bo.UsuarioBo;
 import com.google.gson.Gson;
+import com.itextpdf.text.DocumentException;
 import dao.ProdutoDao;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.util.List;
 import java.util.Map;
 import javax.ws.rs.core.Context;
@@ -19,8 +22,12 @@ import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PUT;
+import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.StreamingOutput;
+import reports.ProdutoReport;
+import reports.UsuariosReport;
 import vo.Produto;
 import vo.Usuario;
 
@@ -71,5 +78,22 @@ public class ProdutoResource {
         } catch (Exception e) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
+    }
+    
+    @GET
+    @Path("/relatorio")
+    @Produces("application/pdf")
+    public StreamingOutput generate() {
+        return new StreamingOutput() {
+            @Override
+            public void write(OutputStream output) throws IOException, WebApplicationException {
+                try {
+                    ProdutoReport report = new ProdutoReport();
+                    report.generate(output);
+                } catch (DocumentException e) {
+                    throw new IOException("error generating PDF", e);
+                }
+            }
+        };
     }
 }
