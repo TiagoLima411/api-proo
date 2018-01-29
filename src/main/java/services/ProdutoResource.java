@@ -6,8 +6,10 @@
 package services;
 
 import bo.ProdutoBo;
+import bo.UsuarioBo;
 import com.google.gson.Gson;
 import dao.ProdutoDao;
+import java.util.List;
 import java.util.Map;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
@@ -20,6 +22,7 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import vo.Produto;
+import vo.Usuario;
 
 /**
  * REST Web Service
@@ -34,31 +37,39 @@ public class ProdutoResource {
 
     public ProdutoResource() {
     }
-    
+
     @POST
     @Path("/inserir")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response insertCliente(String content) {
-        String message = "salvo";        
+    public Response insertCliente(String content) throws Exception {
+        String message = null;
         try {
-            Gson g = new Gson();                  
+            Gson g = new Gson();
             ProdutoBo produtoBo = new ProdutoBo();
-            Produto produto = (Produto) g.fromJson(content, Produto.class);            
-            
-            produtoBo.salvarProduto(produto);            
-            
+            Produto produto = (Produto) g.fromJson(content, Produto.class);
+
+            message = produtoBo.salvarProduto(produto);
+
             Map objMessage;
             objMessage = ConvertMap.converterToMap(message);
-            return Response.ok().entity(g.toJson(objMessage)).build();            
-        } catch (Exception e) {            
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(message).build();
+            return Response.ok().entity(g.toJson(objMessage)).build();
+        } catch (Exception e) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(message + " " + e.getMessage()).build();
         }
-
     }
-/*
-            */
-    @PUT
-    @Consumes(MediaType.APPLICATION_JSON)
-    public void putJson(String content) {
+
+    @GET
+    @Path("/listar")
+    @Produces("application/json")
+    public Response listarUsuarios() {
+        try {
+            List<Produto> lista;
+            Gson g = new Gson();
+            ProdutoBo usuarioBo = new ProdutoBo();
+            lista = usuarioBo.listarProdutos();
+            return Response.ok(g.toJson(lista)).build();
+        } catch (Exception e) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        }
     }
 }

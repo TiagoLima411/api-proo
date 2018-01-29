@@ -18,6 +18,7 @@ import vo.Usuario;
  * @author tiago
  */
 public class ProdutoBo {
+
     
     private float calculaValorTotal(float qtd, float precoUnidade){
         float precoTotal = precoUnidade * qtd;
@@ -62,7 +63,9 @@ public class ProdutoBo {
         
         if (!validaDescricao(produto.getDescricao()))
             return "Descrição do produto inválida (descrição deve conter entre 8 e 70 caracteres)";                
-    
+        
+        
+        
         float valorTotalProduto = calculaValorTotal(produto.getQtd(), produto.getVunt());
         produto.setVtot(valorTotalProduto);
                 
@@ -73,7 +76,7 @@ public class ProdutoBo {
         produto.setVipi(valorDoIPI);
        
         produto.setBicm(valorTotalProduto);
-        produto.setBipi(valorTotalProduto);
+        produto.setBipi(valorTotalProduto);        
         
         try {            
             produtoDao.salvar(produto);
@@ -82,33 +85,37 @@ public class ProdutoBo {
         }
         return "Produto Cadastrado com sucesso";
     }
+    
+    public List<Produto> listarProdutos() throws Exception {        
+        ProdutoDao produtoDao = new ProdutoDao();
+        List<Produto> listaProdutos = new ArrayList<Produto>();
+        try{
+            listaProdutos = produtoDao.listar();
+        }catch(Exception ex){
+            System.out.println(ex.getMessage());
+        }        
+        return listaProdutos;
+    }
+    
+//    public Usuario listarUsuarioPorCpf(String cpf) throws Exception {
+//        
+//        UsuarioDao usuarioDao = new UsuarioDao();
+//        Usuario usuario = new Usuario();
+//        
+//        if (!validaCpf(cpf)) {
+//            return usuario = null;
+//        }
+//        
+//        try {
+//            usuario = usuarioDao.listarPorCpf(cpf);
+//            System.out.println("user: "+usuario.getNomeCompleto());
+//        } catch (Exception ex) {
+//            return usuario = null;
+//        }
+//        
+//        return usuario;
+//    }
     /*
-    public List<Usuario> listarUsuarios() throws Exception {        
-        UsuarioDao usuarioDao = new UsuarioDao();
-        List<Usuario> listaUsuarios = new ArrayList<Usuario>();
-        listaUsuarios = usuarioDao.listar();
-        return listaUsuarios;
-    }
-    
-    public Usuario listarUsuarioPorCpf(String cpf) throws Exception {
-        
-        UsuarioDao usuarioDao = new UsuarioDao();
-        Usuario usuario = new Usuario();
-        
-        if (!validaCpf(cpf)) {
-            return usuario = null;
-        }
-        
-        try {
-            usuario = usuarioDao.listarPorCpf(cpf);
-            System.out.println("user: "+usuario.getNomeCompleto());
-        } catch (Exception ex) {
-            return usuario = null;
-        }
-        
-        return usuario;
-    }
-    
     public String atualizarUsuarioPorCpf(String cpf, Usuario usuario) throws Exception {
         
         UsuarioDao usuarioDao = new UsuarioDao();

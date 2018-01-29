@@ -5,11 +5,15 @@
  */
 package vo;
 
+import java.util.Date;
+import org.bson.types.ObjectId;
+
 /**
  *
  * @author tiago
  */
-public class Produto {    
+public class Produto {
+    private ObjectId _id;
     private String codProd;
     private String descricao;
     private String un;       
@@ -25,12 +29,13 @@ public class Produto {
     private float vipi;
     private float aicm;
     private float aipi;
+    Date dataHoraAtual;
 
     public Produto() {
     }    
     
-    public Produto(String codProd, String descricao, String un, String ncm, String cst, String cfop, float qtd, float vunt, float aicm, float aipi) {
-        this.codProd = codProd;
+    public Produto(String codProd ,String descricao, String un, String ncm, String cst, String cfop, float qtd, float vunt, float aicm, float aipi) {
+        
         this.descricao = descricao;
         this.un = un;
         this.ncm = ncm;
@@ -42,6 +47,14 @@ public class Produto {
         this.aipi = aipi;
     }    
 
+    public ObjectId getId() {
+        return _id;
+    }
+
+    public void setId(ObjectId _id) {
+        this._id = _id;
+    }    
+    
     public String getCodProd() {
         return codProd;
     }
@@ -160,6 +173,14 @@ public class Produto {
 
     public void setAipi(float aipi) {
         this.aipi = aipi;
+    }
+
+    public Date getDataHoraAtual() {
+        return dataHoraAtual;
+    }
+
+    public void setDataHoraAtual(Date dataHoraAtual) {
+        this.dataHoraAtual = dataHoraAtual;
     }
 
 }
