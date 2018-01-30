@@ -47,21 +47,10 @@ public class ProdutoBo {
             return true;
         }
     }
-    
-    private boolean validaCodigoProduto(String codProd){                        
-        if(codProd.isEmpty() || codProd.length()<3 || codProd.length() > 5 || codProd == null || codProd == ""){
-            return false;
-        }else{
-            return true;
-        }
-    }
-    
+            
     public String salvarProduto(Produto produto) throws Exception{
         
-        ProdutoDao produtoDao = new ProdutoDao();
-        
-        if (!validaCodigoProduto(produto.getCodProd()))
-            return "Codigo inválido (codigo deve conter entre 3 e 5 caracteres)";                
+        ProdutoDao produtoDao = new ProdutoDao();                            
         
         if (!validaDescricao(produto.getDescricao()))
             return "Descrição do produto inválida (descrição deve conter entre 8 e 70 caracteres)";                
@@ -76,12 +65,15 @@ public class ProdutoBo {
         produto.setVipi(valorDoIPI);
        
         DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
+        DateFormat cod = new SimpleDateFormat("HHmmssMM/dd/yyyy");
         Date  dataHora = new Date();
         String reportDate = df.format(dataHora);   
+        String codProd = cod.format(dataHora);   
         
         produto.setBicm(valorTotalProduto);
         produto.setBipi(valorTotalProduto);
         produto.setDataHoraAtual(reportDate);
+        produto.setCodProd(codProd);
         
         try {            
             produtoDao.salvar(produto);
