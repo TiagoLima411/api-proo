@@ -23,6 +23,7 @@ import dao.ProdutoDao;
 import dao.UsuarioDao;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -73,9 +74,9 @@ public class ProdutoReport extends PdfPageEventHelper {
         par2.add(new Phrase(Chunk.NEWLINE));
         document.add(par2);
 
-        PdfPTable table = new PdfPTable(13);
+        PdfPTable table = new PdfPTable(14);
         table.setWidthPercentage(100);
-        table.setTotalWidth(new float[]{1,4,1,1,1,1,1,1,1,1,1,1,1});
+        table.setTotalWidth(new float[]{1,4,1,1,1,1,1,1,1,1,1,1,1,2});
         PdfPCell cell1 = new PdfPCell(new Paragraph("Cod", FontFactory.getFont("Arial", 8, Font.NORMAL, BaseColor.DARK_GRAY)));
         PdfPCell cell2 = new PdfPCell(new Paragraph("Descricao", FontFactory.getFont("Arial", 8, Font.NORMAL, BaseColor.DARK_GRAY)));
         PdfPCell cell3 = new PdfPCell(new Paragraph("un", FontFactory.getFont("Arial", 8, Font.NORMAL, BaseColor.DARK_GRAY)));
@@ -85,10 +86,11 @@ public class ProdutoReport extends PdfPageEventHelper {
         PdfPCell cell7 = new PdfPCell(new Paragraph("qtd", FontFactory.getFont("Arial", 8, Font.NORMAL, BaseColor.DARK_GRAY)));
         PdfPCell cell8 = new PdfPCell(new Paragraph("valor", FontFactory.getFont("Arial", 8, Font.NORMAL, BaseColor.DARK_GRAY)));
         PdfPCell cell9 = new PdfPCell(new Paragraph("total", FontFactory.getFont("Arial", 8, Font.NORMAL, BaseColor.DARK_GRAY)));
-        PdfPCell cell10 = new PdfPCell(new Paragraph("V.ICMS", FontFactory.getFont("Arial", 8, Font.NORMAL, BaseColor.DARK_GRAY)));
-        PdfPCell cell11 = new PdfPCell(new Paragraph("V.IPI", FontFactory.getFont("Arial", 8, Font.NORMAL, BaseColor.DARK_GRAY)));
-        PdfPCell cell12 = new PdfPCell(new Paragraph("A.ICMS", FontFactory.getFont("Arial", 8, Font.NORMAL, BaseColor.DARK_GRAY)));
-        PdfPCell cell13 = new PdfPCell(new Paragraph("A.IPI", FontFactory.getFont("Arial", 8, Font.NORMAL, BaseColor.DARK_GRAY)));
+        PdfPCell cell10 = new PdfPCell(new Paragraph("ICMS", FontFactory.getFont("Arial", 8, Font.NORMAL, BaseColor.DARK_GRAY)));
+        PdfPCell cell11 = new PdfPCell(new Paragraph("IPI", FontFactory.getFont("Arial", 8, Font.NORMAL, BaseColor.DARK_GRAY)));
+        PdfPCell cell12 = new PdfPCell(new Paragraph("al-icms", FontFactory.getFont("Arial", 7, Font.NORMAL, BaseColor.DARK_GRAY)));
+        PdfPCell cell13 = new PdfPCell(new Paragraph("al-ipi", FontFactory.getFont("Arial", 7, Font.NORMAL, BaseColor.DARK_GRAY)));
+        PdfPCell cell14 = new PdfPCell(new Paragraph("Data/compra", FontFactory.getFont("Arial", 8, Font.NORMAL, BaseColor.DARK_GRAY)));
 
         cell1.setBorder(0);
         cell2.setBorder(0);
@@ -103,6 +105,7 @@ public class ProdutoReport extends PdfPageEventHelper {
         cell11.setBorder(0);
         cell12.setBorder(0);
         cell13.setBorder(0);
+        cell14.setBorder(0);
 
         table.addCell(cell1);
         table.addCell(cell2);
@@ -117,17 +120,19 @@ public class ProdutoReport extends PdfPageEventHelper {
         table.addCell(cell11);
         table.addCell(cell12);
         table.addCell(cell13);
+        table.addCell(cell14);
 
         int cont = 0;
 
-        String sQtd = null;
-        String sValor = null;
-        String sTotal = null;
-        String sVicms = null;
-        String sVipi = null;
-        String sAicms = null;
-        String sAipi = null;
-
+        String sQtd;
+        String sValor;
+        String sTotal;
+        String sVicms;
+        String sVipi;
+        String sAicms;
+        String sAipi;        
+        
+        
         for (Produto produto : lista) {
             sQtd = Float.toString(produto.getQtd());
             sValor = Float.toString(produto.getVunt());
@@ -135,8 +140,9 @@ public class ProdutoReport extends PdfPageEventHelper {
             sVicms = Float.toString(produto.getVicm());
             sVipi = Float.toString(produto.getVipi());
             sAicms = Float.toString(produto.getAicm());
-            sAipi = Float.toString(produto.getAipi());
-
+            sAipi = Float.toString(produto.getAipi());            
+                     
+            
             PdfPCell cod = new PdfPCell(new Paragraph(produto.getCodProd(), FontFactory.getFont("Arial", 8, Font.NORMAL, BaseColor.BLACK)));
             PdfPCell desc = new PdfPCell(new Paragraph(produto.getDescricao(), FontFactory.getFont("Arial", 8, Font.NORMAL, BaseColor.BLACK)));
             PdfPCell un = new PdfPCell(new Paragraph(produto.getUn(), FontFactory.getFont("Arial", 8, Font.NORMAL, BaseColor.BLACK)));
@@ -148,8 +154,9 @@ public class ProdutoReport extends PdfPageEventHelper {
             PdfPCell total = new PdfPCell(new Paragraph(sTotal, FontFactory.getFont("Arial", 8, Font.NORMAL, BaseColor.BLACK)));
             PdfPCell vIcms = new PdfPCell(new Paragraph(sVicms, FontFactory.getFont("Arial", 8, Font.NORMAL, BaseColor.BLACK)));
             PdfPCell vIpi = new PdfPCell(new Paragraph(sVipi, FontFactory.getFont("Arial", 8, Font.NORMAL, BaseColor.BLACK)));
-            PdfPCell aIcms = new PdfPCell(new Paragraph(sAicms, FontFactory.getFont("Arial", 8, Font.NORMAL, BaseColor.BLACK)));
-            PdfPCell aIpi = new PdfPCell(new Paragraph(sAipi, FontFactory.getFont("Arial", 8, Font.NORMAL, BaseColor.BLACK)));
+            PdfPCell aIcms = new PdfPCell(new Paragraph(sAicms+"%", FontFactory.getFont("Arial", 8, Font.NORMAL, BaseColor.BLACK)));
+            PdfPCell aIpi = new PdfPCell(new Paragraph(sAipi+"%", FontFactory.getFont("Arial", 8, Font.NORMAL, BaseColor.BLACK)));
+            PdfPCell teste = new PdfPCell(new Paragraph(produto.getDataHoraAtual(), FontFactory.getFont("Arial", 8, Font.NORMAL, BaseColor.BLACK)));
 
             if (cont % 2 == 0) {
                 cod.setBackgroundColor(BaseColor.LIGHT_GRAY);
@@ -165,6 +172,7 @@ public class ProdutoReport extends PdfPageEventHelper {
                 vIpi.setBackgroundColor(BaseColor.LIGHT_GRAY);
                 aIcms.setBackgroundColor(BaseColor.LIGHT_GRAY);
                 aIpi.setBackgroundColor(BaseColor.LIGHT_GRAY);
+                teste.setBackgroundColor(BaseColor.LIGHT_GRAY);
             }
 
             cod.setBorder(0);
@@ -180,6 +188,7 @@ public class ProdutoReport extends PdfPageEventHelper {
             vIpi.setBorder(0);
             aIcms.setBorder(0);
             aIpi.setBorder(0);
+            teste.setBorder(0);
 
             table.addCell(cod);
             table.addCell(desc);
@@ -194,6 +203,7 @@ public class ProdutoReport extends PdfPageEventHelper {
             table.addCell(vIpi);
             table.addCell(aIcms);
             table.addCell(aIpi);
+            table.addCell(teste);
 
             cont++;
         }

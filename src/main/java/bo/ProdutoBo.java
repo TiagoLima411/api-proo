@@ -7,7 +7,10 @@ package bo;
 
 import dao.ProdutoDao;
 import dao.UsuarioDao;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import vo.Produto;
 
@@ -56,16 +59,13 @@ public class ProdutoBo {
     public String salvarProduto(Produto produto) throws Exception{
         
         ProdutoDao produtoDao = new ProdutoDao();
-
         
         if (!validaCodigoProduto(produto.getCodProd()))
             return "Codigo inválido (codigo deve conter entre 3 e 5 caracteres)";                
         
         if (!validaDescricao(produto.getDescricao()))
             return "Descrição do produto inválida (descrição deve conter entre 8 e 70 caracteres)";                
-        
-        
-        
+                       
         float valorTotalProduto = calculaValorTotal(produto.getQtd(), produto.getVunt());
         produto.setVtot(valorTotalProduto);
                 
@@ -75,8 +75,13 @@ public class ProdutoBo {
         float valorDoIPI = calculaValorDoIPI(produto.getAipi(), produto.getQtd(), produto.getVunt());
         produto.setVipi(valorDoIPI);
        
+        DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
+        Date  dataHora = new Date();
+        String reportDate = df.format(dataHora);   
+        
         produto.setBicm(valorTotalProduto);
-        produto.setBipi(valorTotalProduto);        
+        produto.setBipi(valorTotalProduto);
+        produto.setDataHoraAtual(reportDate);
         
         try {            
             produtoDao.salvar(produto);

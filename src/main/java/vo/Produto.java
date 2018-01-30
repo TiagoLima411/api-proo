@@ -29,7 +29,7 @@ public class Produto {
     private float vipi;
     private float aicm;
     private float aipi;
-    Date dataHoraAtual;
+    private String dataHoraAtual;
 
     public Produto() {
     }    
@@ -175,11 +175,11 @@ public class Produto {
         this.aipi = aipi;
     }
 
-    public Date getDataHoraAtual() {
+    public String getDataHoraAtual() {
         return dataHoraAtual;
     }
 
-    public void setDataHoraAtual(Date dataHoraAtual) {
+    public void setDataHoraAtual(String dataHoraAtual) {
         this.dataHoraAtual = dataHoraAtual;
     }
 
